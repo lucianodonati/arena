@@ -9,6 +9,10 @@ public class PlayerController : MonoBehaviour
 
     public Rigidbody PRB;
 
+    //////
+
+
+
     // Use this for initialization
     private void Start()
     {
@@ -19,6 +23,10 @@ public class PlayerController : MonoBehaviour
     {
         playerVelocityX = playerSpeed * Input.GetAxisRaw("Horizontal") * Time.deltaTime;
         playerVelocityZ = playerSpeed * Input.GetAxisRaw("Vertical") * Time.deltaTime;
+
+        //movementVector.x = Input.GetAxis("LeftJoystickX") * movementSpeed;
+        //movementVector.z = Input.GetAxis("LeftJoystickY") * movementSpeed;
+
 
         PRB.velocity = new Vector3(playerVelocityX, 0, playerVelocityZ);
     }
