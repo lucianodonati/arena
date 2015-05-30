@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private enum GameState
+    public enum GameState
     {
         MainMenu, Fighting, Showdown, Win
     }
