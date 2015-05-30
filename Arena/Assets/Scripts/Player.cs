@@ -3,7 +3,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    // If you need to see a variable, comment out the [HideInInspector] and when you're done debugging put it back =)
+
+    [HideInInspector]
     public float percentage = 0.0f;
+
+    [HideInInspector]
     public bool alive = true;
 
     // Sounds
@@ -20,6 +25,11 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+    }
+
+    public void takeDamage(float _dam)
+    {
+        percentage += _dam;
     }
 
     private void OnCollisionEnter(Collision collision)
