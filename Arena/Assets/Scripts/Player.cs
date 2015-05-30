@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     #region PlayerStuff
 
     public int id;
+    public Color myColor;
     public string playerName;
     private Renderer myRenderer;
 
@@ -47,6 +48,8 @@ public class Player : MonoBehaviour
         myRenderer = GetComponent<Renderer>();
         PRB = GetComponent<Rigidbody2D>();
         sounds = GetComponent<SoundPlayer>();
+
+        GetComponent<SpriteRenderer>().color = myColor;
     }
 
     // Update is called once per frame
