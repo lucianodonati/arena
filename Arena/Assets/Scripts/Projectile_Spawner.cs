@@ -9,10 +9,12 @@ public class Projectile_Spawner : MonoBehaviour {
 	public Vector2 projectileVelocity;
 	bool canFire;
 	Player owner;
-	Rigidbody RB;
+	public Rigidbody RB;
 
 	// Use this for initialization
 	void Start () {
+		canFire = true;
+		RB.position = transform.position;
 	
 	}
 	
@@ -24,7 +26,8 @@ public class Projectile_Spawner : MonoBehaviour {
 			if(canFire)
 			{
 				Projectile FB = (Projectile)Instantiate(fireball, transform.position + transform.forward * 2, transform.rotation);
-				FB.RB.velocity = new Vector2(1.0f, 0.0f);
+				FB.RB.position = this.transform.position;
+				FB.RB.velocity = new Vector3(1.0f, 1.0f, 1.0f);
 				FB.owner = owner;
 			}
 
