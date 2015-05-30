@@ -63,15 +63,17 @@ public class Player : MonoBehaviour
         {
             // Showdown
         }
-        else if (collGO.tag == "Projectile"/* && collGO.GetComponent<Projectile>().owner != this.gameObject*/)
+        else if (collGO.tag == "Projectile" && collGO.GetComponent<Projectile>().owner != this)
         {
             // Playsound
 
             Vector2 force = collGO.GetComponent<Rigidbody2D>().velocity.normalized;
 
-            force *= 1.0f + percentage;
+            force *= 5000.0f + percentage * 75.0f;
 
             PRB.AddForce(force);
+
+            Destroy(collGO);
         }
         else if (collGO.tag == "Platform")
             onLava = false;

@@ -3,30 +3,33 @@ using UnityEngine;
 
 public class PlayerController2 : MonoBehaviour
 {
-    public float playerSpeed = 15.0f;
-    public float playerVelocityX;
-    public float playerVelocityY;
+    public float playerSpeed = 10000.0f;
 
-    public Rigidbody2D PRB;
-
-    //////
-
-
+    private Rigidbody2D PRB;
 
     // Use this for initialization
     private void Start()
     {
+        PRB = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     private void Update()
     {
-      
-        playerVelocityX = playerSpeed * Input.GetAxisRaw("C2LeftStickX") * Time.deltaTime;
-        playerVelocityY = playerSpeed * Input.GetAxisRaw("C2LeftStickY") * Time.deltaTime;
+        float playerVelocityX = 0, playerVelocityY = 0;
+        {
+            float axis = Input.GetAxisRaw("C2LeftStickX");
+            if (axis != 0)
+                playerVelocityX = playerSpeed * axis * Time.deltaTime;
+        }
 
+        {
+            float axis = Input.GetAxisRaw("C2LeftStickY");
+            if (axis != 0)
+                playerVelocityY = playerSpeed * axis * Time.deltaTime;
+        }
 
-        PRB.velocity = new Vector3(playerVelocityX, -playerVelocityY, 0);
-
+        //PRB.velocity += new Vector2(playerVelocityX, -playerVelocityY);
+        PRB.AddForce(new Vector2(playerVelocityX, -playerVelocityY));
     }
 }
