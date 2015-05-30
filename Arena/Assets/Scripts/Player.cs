@@ -62,7 +62,7 @@ public class Player : MonoBehaviour
             {
                 takeDamage(lavaDamage);
                 lavaTimer = ticEvery;
-                if (Random.Range(0, 5) == 0)
+                if (Random.Range(0, 2) == 0)
                     sounds.PlaySound("LavaHit");
             }
             else
