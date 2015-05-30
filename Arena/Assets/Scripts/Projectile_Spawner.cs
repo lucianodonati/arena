@@ -10,13 +10,13 @@ public class Projectile_Spawner : MonoBehaviour
     private float gameTime;
     public Vector2 projectileVelocity;
     private bool canFire;
-    private float cooldown; // Cooldown that must run out before the player can fire another projectile
-
+   // private float cooldown; // Cooldown that must run out before the player can fire another projectile
+    private float fbSpeed = 1500.0f;
     // Use this for initialization
     private void Start()
     {
         canFire = true;
-        cooldown = 1.5f;
+       // cooldown = 1.5f;
         gameTime = 0.0f;
     }
 
@@ -43,8 +43,23 @@ public class Projectile_Spawner : MonoBehaviour
                 canFire = !canFire;
                 Projectile FB = (Projectile)Instantiate(fireball, transform.position, transform.rotation);
                 //FB.RB.position = this.transform.position;
-                FB.GetComponent<Rigidbody2D>().velocity = new Vector2(5.0f, 0.0f);
                 FB.owner = GameObject.Find("Player " + id).GetComponent<Player>();
+
+                {
+                    float xAxis = Input.GetAxisRaw("RightStickXC" + id);
+                    float yAxis = Input.GetAxisRaw("RightStickYC" + id);
+
+                    FB.GetComponent<Rigidbody2D>().velocity = new Vector2((fbSpeed * xAxis * Time.deltaTime), -(fbSpeed * yAxis * Time.deltaTime));
+
+                }
+
+
+
+
+
+
+
+
             }
         }
     }
