@@ -24,15 +24,9 @@ public class Player : MonoBehaviour
 
     #region Sounds
 
-    public SoundPlayer sounds;
+    private SoundPlayer sounds;
 
     #endregion Sounds
-
-    #region Projectile
-
-    public GameObject projectile;
-
-    #endregion Projectile
 
     #region Lava
 
