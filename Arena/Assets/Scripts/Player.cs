@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     //[HideInInspector]
     public float percentage = 0.0f;
 
-    public Rigidbody PRB;
+    private Rigidbody2D PRB;
 
     [HideInInspector]
     public bool alive = true;
@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
+        PRB = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -50,15 +51,12 @@ public class Player : MonoBehaviour
         percentage += _dam;
     }
 
-    private void OnCollisionStay(Collision collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         GameObject collGO = collision.gameObject;
-
-        if (collGO.tag == "Platform")
-            onLava = false;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject collGO = collision.gameObject;
         if (collGO.tag == "Player")
@@ -69,32 +67,28 @@ public class Player : MonoBehaviour
         {
             // Playsound
 
-            Vector3 force = collGO.GetComponent<Rigidbody>().velocity.normalized;
+            Vector2 force = collGO.GetComponent<Rigidbody2D>().velocity.normalized;
 
             force *= 1.0f + percentage;
 
             PRB.AddForce(force);
         }
-        else if (collGO.tag == "Lava")
+        else if (collGO.tag == "Platform")
+            onLava = false;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        GameObject collGO = collision.gameObject;
+
+        if (collGO.tag == "Platform")
         {
             // Playsound
 
-            Lava theLava = collGO.GetComponent<Lava>();
-
+            Lava theLava = GameObject.Find("Lava").GetComponent<Lava>();
             ticEvery = theLava.ticTimer;
             lavaDamage = theLava.damage;
-            takeDamage(lavaDamage);
             onLava = true;
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        //GameObject collGO = collision.gameObject;
-
-        if (collision.gameObject.tag == "Lava")
-        {
-            onLava = false;
         }
     }
 }

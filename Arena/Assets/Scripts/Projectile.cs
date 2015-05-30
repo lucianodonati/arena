@@ -27,6 +27,16 @@ public class Projectile : MonoBehaviour {
 			RB.AddForce( RB.velocity, ForceMode.VelocityChange );	
 		}
 
-	
 	}
+	
+	void OnCollisionEnter(Collision hit)
+		{
+		if(hit.gameObject.tag == "Player" || hit.gameObject.tag == "Platform" || hit.gameObject.tag == "Lava")
+			{
+				print("hit " + hit.gameObject.name);
+				Destroy(this.gameObject);
+			}
+		}
+	
+	
 }

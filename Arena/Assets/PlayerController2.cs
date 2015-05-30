@@ -5,9 +5,9 @@ public class PlayerController2 : MonoBehaviour
 {
     public float playerSpeed = 15.0f;
     public float playerVelocityX;
-    public float playerVelocityZ;
+    public float playerVelocityY;
 
-    public Rigidbody PRB;
+    public Rigidbody2D PRB;
 
     //////
 
@@ -23,11 +23,12 @@ public class PlayerController2 : MonoBehaviour
     {
       
         playerVelocityX = playerSpeed * Input.GetAxisRaw("C2LeftStickX") * Time.deltaTime;
-        playerVelocityZ = playerSpeed * Input.GetAxisRaw("C2LeftStickY") * Time.deltaTime;
+        playerVelocityY = playerSpeed * Input.GetAxisRaw("C2LeftStickY") * Time.deltaTime;
 
 
 
 
-        PRB.velocity = new Vector3(playerVelocityX, 0, -playerVelocityZ);
+        PRB.velocity = new Vector3(playerVelocityX, -playerVelocityY, 0);
+
     }
 }

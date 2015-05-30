@@ -10,22 +10,47 @@ public class Projectile_Spawner : MonoBehaviour
     private bool canFire;
     private Player owner;
     private Rigidbody RB;
+	private float cooldown; // Cooldown that must run out before the player can fire another projectile
 
-    // Use this for initialization
-    private void Start()
-    {
-    }
 
-    // Update is called once per frame
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (canFire)
-            {
-                fireball.RB.velocity = new Vector3(1.0f, 0.0f);
-                fireball.owner = owner;
-            }
-        }
-    }
+	// Use this for initialization
+	void Start () {
+		canFire = true;
+		cooldown = 1.5f;
+		gameTime = 0.0f;
+		//RB.position = transform.localPosition;
+	
+	}
+	
+	// Update is called once per frame
+	void Update () {
+
+		if (!canFire) {
+			gameTime += Time.deltaTime;
+
+			if (gameTime >= 1.5f)
+			{
+				canFire = !canFire;
+				gameTime = 0.0f;
+			}
+		}
+
+		//Have the spawner create a projectile when the player presses the button
+		if(Input.GetKeyDown(KeyCode.Space))
+		{
+			//Checks to see if the player can fire a projectile
+			if(canFire)
+			{
+				canFire = !canFire;
+				Projectile FB = (Projectile)Instantiate(fireball, transform.position, transform.rotation);
+				//FB.RB.position = this.transform.position;
+				FB.RB.velocity = new Vector3(1.0f, 0.0f, 1.0f);
+				FB.owner = owner;
+			}
+
+	
+		}
+
+	
+	}
 }
