@@ -46,6 +46,7 @@ public class Projectile_Spawner : MonoBehaviour
             {
                 canFire = !canFire;
                 Projectile FB = (Projectile)Instantiate(fireball, transform.position, transform.rotation);
+                FB.GetComponent<SpriteRenderer>().color = daddy.myColor;
                 //FB.RB.position = this.transform.position;
                 FB.owner = GameObject.Find("Player " + daddy.id).GetComponent<Player>();
 
