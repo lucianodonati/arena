@@ -26,8 +26,6 @@ public class PlayerController2 : MonoBehaviour
         playerVelocityY = playerSpeed * Input.GetAxisRaw("C2LeftStickY") * Time.deltaTime;
 
 
-
-
         PRB.velocity = new Vector3(playerVelocityX, -playerVelocityY, 0);
 
     }
