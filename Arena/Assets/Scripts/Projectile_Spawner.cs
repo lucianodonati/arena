@@ -11,13 +11,6 @@ public class Projectile_Spawner : MonoBehaviour
     private Player owner;
     private Rigidbody RB;
 
-	public Projectile fireball;
-	public AudioClip launchSound;
-	float gameTime;
-	public Vector2 projectileVelocity;
-	bool canFire;
-	Player owner;
-	public Rigidbody RB;
 
 	// Use this for initialization
 	void Start () {
