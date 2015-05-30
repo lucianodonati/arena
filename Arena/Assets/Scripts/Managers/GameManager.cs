@@ -65,20 +65,24 @@ public class GameManager : MonoBehaviour
         {
             case 0:
                 startingPos.x = -3.0f;
+                newPlayer.myColor = Color.red;
                 break;
 
             case 1:
                 startingPos.x = 3.0f;
+                newPlayer.myColor = Color.blue;
                 break;
 
             case 2:
                 startingPos.x = -3.0f;
                 startingPos.y = -3.5f;
+                newPlayer.myColor = Color.green;
                 break;
 
             case 3:
                 startingPos.x = 3.0f;
                 startingPos.y = -3.5f;
+                newPlayer.myColor = Color.magenta;
                 break;
         }
         newPlayer.transform.position = startingPos;
