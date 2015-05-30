@@ -6,13 +6,13 @@ public class Projectile : MonoBehaviour
     public float speed = 10;
     private Vector3 vel = new Vector3(1, 1, 1);
     private Vector3 pos = new Vector3(0, 0, 0);
-    public AudioClip sound;
     public Player owner;
     private Projectile_Spawner launcher;
 
     // Use this for initialization
     private void Start()
     {
+        GetComponent<SoundPlayer>().PlaySound("Fire");
     }
 
     // Update is called once per frame
