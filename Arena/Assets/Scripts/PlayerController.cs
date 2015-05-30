@@ -4,12 +4,13 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float playerSpeed = 10000.0f;
-    public string id;
     private Rigidbody2D PRB;
+    private Player player;
 
     // Use this for initialization
     private void Start()
     {
+        player = GetComponent<Player>();
         PRB = GetComponent<Rigidbody2D>();
     }
 
@@ -18,13 +19,13 @@ public class PlayerController : MonoBehaviour
     {
         float playerVelocityX = 0, playerVelocityY = 0;
         {
-            float axis = Input.GetAxisRaw("LeftStickXC" + id);
+            float axis = Input.GetAxisRaw("LeftStickXC" + player.id);
             if (axis != 0)
                 playerVelocityX = playerSpeed * axis * Time.deltaTime;
         }
 
         {
-            float axis = Input.GetAxisRaw("LeftStickYC" + id);
+            float axis = Input.GetAxisRaw("LeftStickYC" + player.id);
             if (axis != 0)
                 playerVelocityY = playerSpeed * axis * Time.deltaTime;
         }
