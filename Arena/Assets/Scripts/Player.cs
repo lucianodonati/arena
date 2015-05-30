@@ -99,6 +99,8 @@ public class Player : MonoBehaviour
 
             PRB.AddForce(force);
 
+            takeDamage(10.0f);
+
             Destroy(collGO);
         }
         else if (collGO.tag == "Platform")
