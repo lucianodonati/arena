@@ -55,7 +55,7 @@
     /// </summary>
     public virtual void Update()
     {
-
+        Showdown.GetInstance().RunTimer();
     }
 
     /// <summary>

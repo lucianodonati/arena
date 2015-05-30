@@ -1,14 +1,17 @@
-﻿public class ShowdownInitState : ShowdownState
+﻿public class ShowdownFightState : ShowdownState
 {    
     #region Constructor
 
     /// <summary>
     /// Default Constructor - sets this states BattleStateType.
     /// </summary>
-    public ShowdownInitState()
+    public ShowdownFightState(bool transitionOnly=false)
     {
-        this.StateType = ShowdownState.ShowdownStateType.ShowdownInitState;
-        OnEnter();
+        this.StateType = ShowdownState.ShowdownStateType.ShowdownFightState;
+        if (transitionOnly == false)
+        {            
+            OnEnter();
+        }
     }
 
     #endregion
@@ -21,6 +24,8 @@
     public override void OnEnter()
     {
         base.OnEnter();
+
+        Showdown.GetInstance().Fight();
     }
     
     /// <summary>
@@ -37,10 +42,6 @@
     public override void Update()
     {
         base.Update();
-
-
-        // Initialize the Showdown here.
-        Showdown.GetInstance().InitShowdown();
     }
 
     #endregion
