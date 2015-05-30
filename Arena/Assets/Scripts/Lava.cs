@@ -14,4 +14,12 @@ public class Lava : MonoBehaviour
     private void Update()
     {
     }
+
+	void OnCollisionEnter(Collision hit)
+	{
+		//if(hit.gameObject.tag == "Projectile")
+		//{
+		//	Destroy(hit.gameObject,0.0f);
+		//}
+	}
 }
