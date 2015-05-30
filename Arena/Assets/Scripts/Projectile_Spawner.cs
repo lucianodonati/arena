@@ -43,10 +43,12 @@ public class Projectile_Spawner : MonoBehaviour
         float xAxis = Input.GetAxisRaw("RightStickXC" + daddy.id);
         float yAxis = Input.GetAxisRaw("RightStickYC" + daddy.id);
 
-        xAxis = Mathf.Abs(xAxis);
-        yAxis = Mathf.Abs(yAxis);
+       // xAxis = Mathf.Abs(xAxis);
+      //  yAxis = Mathf.Abs(yAxis);
 
-
+        float angle2 = Mathf.Atan2(yAxis, xAxis);
+        float angle3 = Mathf.Rad2Deg * angle2;
+        print(angle3);
         //Vector3 aimDirection = new Vector3(xAxis, yAxis, 0);
         //float angle = Vector3.Angle(aimDirection, new Vector3(0, 0, 1));
         //Vector3 cross = Vector3.Cross(aimDirection, new Vector3(0, 0, 1));
@@ -57,11 +59,8 @@ public class Projectile_Spawner : MonoBehaviour
         //    //     transform.RotateAround(daddy.transform.position, Vector3.back, angle); 
         //}
         float angle = (xAxis + yAxis * 90);
-        if (angle < 0)
-        {
-
-        }
-        transform.parent.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        
+        transform.parent.transform.rotation = Quaternion.Euler(new Vector3(0, 0, -angle3));
 
 
         //Have the spawner create a projectile when the player presses the button
@@ -72,7 +71,6 @@ public class Projectile_Spawner : MonoBehaviour
             {
                 canFire = !canFire;
                 Projectile FB = (Projectile)Instantiate(fireball, transform.position, transform.rotation);
-                FB.GetComponent<SpriteRenderer>().color = daddy.myColor;
                 //FB.RB.position = this.transform.position;
                 FB.owner = GameObject.Find("Player " + daddy.id).GetComponent<Player>();
 
