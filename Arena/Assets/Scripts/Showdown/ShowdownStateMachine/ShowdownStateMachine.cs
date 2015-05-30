@@ -59,11 +59,18 @@ public class ShowdownStateMachine
     {       
         IShowdownState battleState = GetNextState(nextState);
 
-        currentState.OnExit();
+        if (battleState != null)
+        {
+            currentState.OnExit();
 
-        currentState = battleState;
+            currentState = battleState;
 
-        currentState.OnEnter();
+            currentState.OnEnter();
+        }
+        else
+        {
+
+        }
     }
 
     #endregion
@@ -75,9 +82,11 @@ public class ShowdownStateMachine
     /// </summary>
     private void InitializeTransitions()
     {
-        transitions.Add(new ShowdownStateTransition(ShowdownState.ShowdownStateType.ShowdownInitState, ShowdownState.ShowdownStateType.ShowdownSuspenseState), new ShowdownSuspenseState());
-        transitions.Add(new ShowdownStateTransition(ShowdownState.ShowdownStateType.ShowdownSuspenseState, ShowdownState.ShowdownStateType.ShowdownFightState), new ShowdownFightState());
-        transitions.Add(new ShowdownStateTransition(ShowdownState.ShowdownStateType.ShowdownFightState, ShowdownState.ShowdownStateType.ShowdownResolveState), new ShowdownResolveState());
+        transitions.Add(new ShowdownStateTransition(ShowdownState.ShowdownStateType.ShowdownInitState, ShowdownState.ShowdownStateType.ShowdownSuspenseState), new ShowdownSuspenseState(true));
+        transitions.Add(new ShowdownStateTransition(ShowdownState.ShowdownStateType.ShowdownSuspenseState, ShowdownState.ShowdownStateType.ShowdownFightState), new ShowdownFightState(true));
+        transitions.Add(new ShowdownStateTransition(ShowdownState.ShowdownStateType.ShowdownSuspenseState, ShowdownState.ShowdownStateType.ShowdownResolveState), new ShowdownResolveState(true));
+        transitions.Add(new ShowdownStateTransition(ShowdownState.ShowdownStateType.ShowdownFightState, ShowdownState.ShowdownStateType.ShowdownResolveState), new ShowdownResolveState(true));
+        transitions.Add(new ShowdownStateTransition(ShowdownState.ShowdownStateType.ShowdownResolveState, ShowdownState.ShowdownStateType.ShowdownInitState), new ShowdownInitState(true));
     }
     
     /// <summary>
@@ -89,12 +98,14 @@ public class ShowdownStateMachine
     {
         IShowdownState nextState = null;
 
-        ShowdownStateTransition transition = new ShowdownStateTransition(currentState.StateType, nextBattleState);
-        if(!transitions.TryGetValue( transition, out nextState ))
+        if (!currentState.StateType.Equals(nextBattleState))
         {
-            UnityEngine.Debug.LogError("Invalid Transition");
+            ShowdownStateTransition transition = new ShowdownStateTransition(currentState.StateType, nextBattleState);
+            if (!transitions.TryGetValue(transition, out nextState))
+            {
+                UnityEngine.Debug.Log("Invalid Transition from:" + currentState.StateType.ToString() + " to:" + nextBattleState.ToString());
+            }
         }
-
         return nextState;
     }
     
