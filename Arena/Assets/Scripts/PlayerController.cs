@@ -21,11 +21,13 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        playerVelocityX = playerSpeed * Input.GetAxisRaw("Horizontal") * Time.deltaTime;
-        playerVelocityZ = playerSpeed * Input.GetAxisRaw("Vertical") * Time.deltaTime;
+        playerVelocityX = playerSpeed * Input.GetAxisRaw("C1LeftStickX") * Time.deltaTime;
+        playerVelocityZ = playerSpeed * Input.GetAxisRaw("C1LeftStickY") * Time.deltaTime;
 
-        //movementVector.x = Input.GetAxis("LeftJoystickX") * movementSpeed;
-        //movementVector.z = Input.GetAxis("LeftJoystickY") * movementSpeed;
+        //playerVelocityX = playerSpeed * Input.GetAxisRaw("C2LeftStickX") * Time.deltaTime;
+        //playerVelocityZ = playerSpeed * Input.GetAxisRaw("C2LeftStickY") * Time.deltaTime;
+
+       
 
 
         PRB.velocity = new Vector3(playerVelocityX, 0, playerVelocityZ);
