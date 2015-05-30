@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     private Dictionary<int, Player> players;
     public Player playerPrefab;
     public float gameTime = 0.0f;
+    public Showdown showdown;
 
     public enum GameState
     {
@@ -43,6 +44,7 @@ public class GameManager : MonoBehaviour
                 break;
 
             case GameState.Showdown:
+                //Showdown.GetInstance().InitShowdown(player, player2);
                 break;
 
             case GameState.Win:
