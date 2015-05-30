@@ -13,7 +13,7 @@ public class Projectile_Spawner : MonoBehaviour
     private bool canFire;
 
     // private float cooldown; // Cooldown that must run out before the player can fire another projectile
-    private float fbSpeed = 1500.0f;
+    private float fbSpeed = 350.0f;
 
     // Use this for initialization
     private void Start()
@@ -46,7 +46,7 @@ public class Projectile_Spawner : MonoBehaviour
             {
                 canFire = !canFire;
                 Projectile FB = (Projectile)Instantiate(fireball, transform.position, transform.rotation);
-                FB.GetComponent<SpriteRenderer>().color = daddy.myColor;
+                //FB.GetComponent<SpriteRenderer>().color = daddy.myColor;
                 //FB.RB.position = this.transform.position;
                 FB.owner = GameObject.Find("Player " + daddy.id).GetComponent<Player>();
 
