@@ -20,12 +20,11 @@ public class Projectile : MonoBehaviour
     {
     }
 
-    private void OnCollisionEnter(Collision hit)
+    private void OnTriggerEnter2D(Collider2D hit)
     {
-        if (hit.gameObject.tag == "Player" || hit.gameObject.tag == "Platform" || hit.gameObject.tag == "Lava")
-        {
-            print("hit " + hit.gameObject.name);
-            Destroy(this.gameObject);
-        }
+        //if (hit.gameObject.tag == "Player")
+        //{
+        //    Destroy(this.gameObject);
+        //}
     }
 }
