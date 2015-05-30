@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public Color myColor;
     public string playerName;
     private Renderer myRenderer;
+    private GameManager gm;
 
     //[HideInInspector]
     public float percentage = 0.0f;
@@ -42,7 +43,7 @@ public class Player : MonoBehaviour
         myRenderer = GetComponent<Renderer>();
         PRB = GetComponent<Rigidbody2D>();
         sounds = GetComponent<SoundPlayer>();
-
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         GetComponent<SpriteRenderer>().color = myColor;
     }
 
@@ -79,14 +80,21 @@ public class Player : MonoBehaviour
         GameObject collGO = collision.gameObject;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         GameObject collGO = collision.gameObject;
         if (collGO.tag == "Player")
         {
             // Showdown
+            gm.GoShowdown(this, collGO.GetComponent<Player>());
         }
-        else if (collGO.tag == "Projectile" && collGO.GetComponent<Projectile>().owner != this)
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        GameObject collGO = collision.gameObject;
+
+        if (collGO.tag == "Projectile" && collGO.GetComponent<Projectile>().owner != this)
         {
             // Playsound
 

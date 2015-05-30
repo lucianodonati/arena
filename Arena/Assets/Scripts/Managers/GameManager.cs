@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public Player playerPrefab;
     public float gameTime = 0.0f;
     public Showdown showdown;
+    public Player showdown1, showdown2;
 
     public enum GameState
     {
@@ -44,7 +45,8 @@ public class GameManager : MonoBehaviour
                 break;
 
             case GameState.Showdown:
-                //Showdown.GetInstance().InitShowdown(player, player2);
+                //showdown1.movementEnabled = false;
+                //showdown2.movementEnabled = false;
                 break;
 
             case GameState.Win:
@@ -62,28 +64,28 @@ public class GameManager : MonoBehaviour
         Player newPlayer = Instantiate(playerPrefab);
         newPlayer.id = players.Count + 1;
 
-        Vector3 startingPos = new Vector3(0.9f, 0.6f, -7.0f);
+        Vector3 startingPos = new Vector3(15.6f, 16.8f, -7.0f);
         switch (newPlayer.id % 4)
         {
             case 0:
-                startingPos.x = -0.9f;
+                startingPos.x = -15.6f;
                 newPlayer.myColor = Color.red;
                 break;
 
             case 1:
-                startingPos.x = 0.9f;
+                startingPos.x = 15.6f;
                 newPlayer.myColor = Color.blue;
                 break;
 
             case 2:
-                startingPos.x = -0.9f;
-                startingPos.y = -0.6f;
+                startingPos.x = -15.6f;
+                startingPos.y = -16.8f;
                 newPlayer.myColor = Color.green;
                 break;
 
             case 3:
-                startingPos.x = 0.9f;
-                startingPos.y = -0.6f;
+                startingPos.x = 15.6f;
+                startingPos.y = -16.8f;
                 newPlayer.myColor = Color.magenta;
                 break;
         }
@@ -100,6 +102,17 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion Player
+
+    public void GoShowdown(Player p1, Player p2)
+    {
+        if (currentState != GameState.Showdown)
+        {
+            showdown1 = p1;
+            showdown2 = p2;
+            setState(GameState.Showdown);
+            Showdown.GetInstance().InitShowdown(showdown1, showdown2);
+        }
+    }
 
     public void setState(GameState _state)
     {

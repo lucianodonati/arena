@@ -17,9 +17,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetButtonDown("ShowdownButton" + player.id))
-            Showdown.GetInstance().ExecuteAttack(player);
-
+        if (GameObject.Find("GameManager").GetComponent<GameManager>().currentState == GameManager.GameState.Showdown)
+        {
+            if (Input.GetButtonDown("ShowdownButton" + player.id))
+                Showdown.GetInstance().ExecuteAttack(player);
+        }
         float playerVelocityX = 0, playerVelocityY = 0;
         {
             float axis = Input.GetAxisRaw("LeftStickXC" + player.id);

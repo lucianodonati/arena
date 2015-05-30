@@ -135,15 +135,6 @@ public class Showdown : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.A))
-        {
-            Player player = new Player();
-            Player player2 = new Player();
-
-            player.playerName = "testplayer1";
-            player2.playerName = "testplayer2";
-        }
-
         stateMachine.CurrentState.Update();
 
         #region debug information
