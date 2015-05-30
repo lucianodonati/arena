@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -47,5 +48,20 @@ public class GameManager : MonoBehaviour
             Application.LoadLevel((int)_state);
 
         currentState = _state;
+    }
+
+    public void setState(string stateString)
+    {
+        try
+        {
+            currentState = (GameState)(Enum.Parse(typeof(GameState), stateString, true));
+
+            if ((int)currentState < 2)
+                Application.LoadLevel((int)currentState);
+        }
+        catch (ArgumentNullException e)
+        {
+            Debug.LogError(e.Message);
+        }
     }
 }
