@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public float gameTime = 0.0f;
+
     public enum GameState
     {
         MainMenu, Fighting, Showdown, Win
@@ -25,6 +27,7 @@ public class GameManager : MonoBehaviour
                 break;
 
             case GameState.Fighting:
+                gameTime += Time.deltaTime;
                 break;
 
             case GameState.Showdown:
@@ -40,6 +43,9 @@ public class GameManager : MonoBehaviour
 
     public void setState(GameState _state)
     {
+        if ((int)_state < 2)
+            Application.LoadLevel((int)_state);
+
         currentState = _state;
     }
 }
