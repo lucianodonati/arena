@@ -50,10 +50,17 @@ public class Player : MonoBehaviour
         percentage += _dam;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         GameObject collGO = collision.gameObject;
 
+        if (collGO.tag == "Platform")
+            onLava = false;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        GameObject collGO = collision.gameObject;
         if (collGO.tag == "Player")
         {
             // Showdown
@@ -76,6 +83,7 @@ public class Player : MonoBehaviour
 
             ticEvery = theLava.ticTimer;
             lavaDamage = theLava.damage;
+            takeDamage(lavaDamage);
             onLava = true;
         }
     }
