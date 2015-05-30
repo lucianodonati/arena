@@ -7,15 +7,14 @@ public class PlayerController : MonoBehaviour
     public float playerVelocityX;
     public float playerVelocityZ;
 
-    public Rigidbody PRB;
+    private Rigidbody2D PRB;
 
     //////
-
-
 
     // Use this for initialization
     private void Start()
     {
+        PRB = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -27,7 +26,6 @@ public class PlayerController : MonoBehaviour
         //movementVector.x = Input.GetAxis("LeftJoystickX") * movementSpeed;
         //movementVector.z = Input.GetAxis("LeftJoystickY") * movementSpeed;
 
-
-        PRB.velocity = new Vector3(playerVelocityX, 0, playerVelocityZ);
+        PRB.velocity = new Vector2(playerVelocityX, playerVelocityZ);
     }
 }
