@@ -23,9 +23,9 @@ public class Projectile_Spawner : MonoBehaviour {
 		{
 			if(canFire)
 			{
-				Projectile fireball = (GameObject)Instantiate(Projectile, transform.position + transform.forward * 2, transform.rotation);
-				fireball.RB.velocity = Vector2(1.0f, 0.0f);
-				fireball.owner = owner;
+				Projectile FB = (Projectile)Instantiate(fireball, transform.position + transform.forward * 2, transform.rotation);
+				FB.RB.velocity = new Vector2(1.0f, 0.0f);
+				FB.owner = owner;
 			}
 
 	
