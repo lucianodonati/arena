@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Projectile_Spawner : MonoBehaviour
 {
+    private Player daddy;
     public float shootTimer = 0.5f;
-    public string id;
     public Projectile fireball;
     public AudioClip launchSound;
     private float gameTime;
@@ -18,6 +18,7 @@ public class Projectile_Spawner : MonoBehaviour
         canFire = true;
         cooldown = 1.5f;
         gameTime = 0.0f;
+        daddy = transform.parent.GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -35,7 +36,7 @@ public class Projectile_Spawner : MonoBehaviour
         }
 
         //Have the spawner create a projectile when the player presses the button
-        if (Input.GetAxisRaw("Fire" + id) > 0.0f)
+        if (Input.GetAxisRaw("Fire" + daddy.id) > 0.0f)
         {
             //Checks to see if the player can fire a projectile
             if (canFire)
@@ -44,7 +45,7 @@ public class Projectile_Spawner : MonoBehaviour
                 Projectile FB = (Projectile)Instantiate(fireball, transform.position, transform.rotation);
                 //FB.RB.position = this.transform.position;
                 FB.GetComponent<Rigidbody2D>().velocity = new Vector2(5.0f, 0.0f);
-                FB.owner = GameObject.Find("Player " + id).GetComponent<Player>();
+                FB.owner = GameObject.Find("Player " + daddy.id).GetComponent<Player>();
             }
         }
     }

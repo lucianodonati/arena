@@ -5,6 +5,12 @@ public class Player : MonoBehaviour
 {
     // If you need to see a variable, comment out the [HideInInspector] and when you're done debugging put it back =)
 
+    #region PlayerStuff
+
+    public int id;
+    public string playerName;
+    private Renderer myRenderer;
+
     //[HideInInspector]
     public float percentage = 0.0f;
 
@@ -13,20 +19,32 @@ public class Player : MonoBehaviour
     [HideInInspector]
     public bool alive = true;
 
-    // Sounds
+    #endregion PlayerStuff
+
+    #region Sounds
+
     public SoundPlayer sounds;
 
-    // Projectile
+    #endregion Sounds
+
+    #region Projectile
+
     public GameObject projectile;
 
-    // Lava
+    #endregion Projectile
+
+    #region Lava
+
     public bool onLava = false;
 
     private float lavaTimer = 0.0f, ticEvery = 0.0f, lavaDamage;
 
+    #endregion Lava
+
     // Use this for initialization
     private void Start()
     {
+        myRenderer = GetComponent<Renderer>();
         PRB = GetComponent<Rigidbody2D>();
         sounds = GetComponent<SoundPlayer>();
     }
@@ -46,6 +64,11 @@ public class Player : MonoBehaviour
             }
             else
                 lavaTimer -= Time.deltaTime;
+
+            // Die
+
+            if (!myRenderer.isVisible)
+                GameObject.Find("GameManager").GetComponent<GameManager>().PlayerDied(id);
         }
     }
 

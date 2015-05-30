@@ -1,9 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class GameManager : MonoBehaviour
 {
+    private Dictionary<int, Player> players;
+    public Player playerPrefab;
     public float gameTime = 0.0f;
 
     public enum GameState
@@ -16,12 +19,20 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
+        players = new Dictionary<int, Player>(Input.GetJoystickNames().Length);
+        Debug.Log(Input.GetJoystickNames().Length + " players detected");
         DontDestroyOnLoad(this);
+
+        //CreatePlayer("Luciano");
+        //CreatePlayer("Brian");
     }
 
     // Update is called once per frame
     private void Update()
     {
+        if (players.Count == 1)
+            currentState = GameState.Win;
+
         switch (currentState)
         {
             case GameState.MainMenu:
@@ -41,6 +52,48 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
+
+    #region Player
+
+    public void CreatePlayer(string _name)
+    {
+        Player newPlayer = Instantiate(playerPrefab);
+        newPlayer.id = players.Count + 1;
+
+        Vector3 startingPos = new Vector3(3.0f, 3.5f, -7.0f);
+        switch (newPlayer.id % 4)
+        {
+            case 0:
+                startingPos.x = -3.0f;
+                break;
+
+            case 1:
+                startingPos.x = 3.0f;
+                break;
+
+            case 2:
+                startingPos.x = -3.0f;
+                startingPos.y = -3.5f;
+                break;
+
+            case 3:
+                startingPos.x = 3.0f;
+                startingPos.y = -3.5f;
+                break;
+        }
+        newPlayer.transform.position = startingPos;
+
+        newPlayer.playerName = _name;
+        newPlayer.name = "Player " + newPlayer.id;
+        players.Add(newPlayer.id, newPlayer);
+    }
+
+    public void PlayerDied(int _id)
+    {
+        players.Remove(_id);
+    }
+
+    #endregion Player
 
     public void setState(GameState _state)
     {
