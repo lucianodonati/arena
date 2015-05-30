@@ -23,6 +23,7 @@ public class SoundPlayer : MonoBehaviour
 
     public void PlaySound(string _sound)
     {
+        Debug.Log(_sound);
         audioSource.clip = getRandomClip(_sound);
         if (audioSource.clip == null)
             Debug.LogError("Trying to play: " + _sound + " ,but is not assigned.");
@@ -36,7 +37,7 @@ public class SoundPlayer : MonoBehaviour
         foreach (Sound theSound in sounds)
         {
             if (theSound.name.Equals(_sound))
-                theClip = theSound.clips[Random.Range(0, theSound.clips.Count)];
+                theClip = theSound.clips[Random.Range(0, theSound.clips.Count-1)];
         }
         return theClip;
     }
