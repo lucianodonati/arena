@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     public bool alive = true;
 
     // Sounds
-    public AudioClip hurtSound;
+    public SoundPlayer sounds;
 
     // Projectile
     public GameObject projectile;
@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         PRB = GetComponent<Rigidbody2D>();
+        sounds = GetComponent<SoundPlayer>();
     }
 
     // Update is called once per frame
@@ -40,6 +41,8 @@ public class Player : MonoBehaviour
             {
                 takeDamage(lavaDamage);
                 lavaTimer = ticEvery;
+                if (Random.Range(0, 5) == 0)
+                    sounds.PlaySound("LavaHit");
             }
             else
                 lavaTimer -= Time.deltaTime;
