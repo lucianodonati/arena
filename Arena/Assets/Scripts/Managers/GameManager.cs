@@ -19,5 +19,27 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        switch (currentState)
+        {
+            case GameState.MainMenu:
+                break;
+
+            case GameState.Fighting:
+                break;
+
+            case GameState.Showdown:
+                break;
+
+            case GameState.Win:
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    public void setState(GameState _state)
+    {
+        currentState = _state;
     }
 }
