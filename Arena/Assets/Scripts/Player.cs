@@ -3,8 +3,11 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private float percentage = 0.0f;
+    public float percentage = 0.0f;
     public bool alive = true;
+
+    // Sounds
+    public AudioClip hurtSound;
 
     // Projectile
     public GameObject projectile;
@@ -23,9 +26,11 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            // Showdown
         }
         else if (collision.gameObject.tag == "Projectile")
         {
+            // Playsound
         }
     }
 }
