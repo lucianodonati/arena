@@ -1,42 +1,31 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
-public class Projectile : MonoBehaviour {
+public class Projectile : MonoBehaviour
+{
+    public float speed = 10;
+    private Vector3 vel = new Vector3(1, 1, 1);
+    private Vector3 pos = new Vector3(0, 0, 0);
+    public AudioClip sound;
+    public Player owner;
+    private Projectile_Spawner launcher;
 
-	public float speed = 10;
-	Vector3 vel = new Vector3(1,1,1);
-	Vector3 pos = new Vector3(0,0,0);
-	public AudioClip sound;
-	public Player owner;
-	Projectile_Spawner launcher;
-	public Rigidbody RB;
+    // Use this for initialization
+    private void Start()
+    {
+    }
 
+    // Update is called once per frame
+    private void Update()
+    {
+    }
 
-	// Use this for initialization
-	void Start () {
-
-	
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
-		if( RB.velocity.magnitude <= 15 )
-		{
-			RB.AddForce( RB.velocity, ForceMode.VelocityChange );	
-		}
-
-	}
-	
-	void OnCollisionEnter(Collision hit)
-		{
-		if(hit.gameObject.tag == "Player" || hit.gameObject.tag == "Platform" || hit.gameObject.tag == "Lava")
-			{
-				print("hit " + hit.gameObject.name);
-				Destroy(this.gameObject);
-			}
-		}
-	
-	
+    private void OnCollisionEnter(Collision hit)
+    {
+        if (hit.gameObject.tag == "Player" || hit.gameObject.tag == "Platform" || hit.gameObject.tag == "Lava")
+        {
+            print("hit " + hit.gameObject.name);
+            Destroy(this.gameObject);
+        }
+    }
 }
