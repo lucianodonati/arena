@@ -12,12 +12,18 @@ public class GameManager : MonoBehaviour
     public float gameTime = 0.0f;
     public Player showdown1, showdown2;
     public int rounds = 1;
+
     public int m_nPlayerCount;
     public float m_fWinTimer;
     public string m_sWinMessege;
 
     public Camera mainCamera, showdownCamera;
     public GameObject HUD;
+
+	Texture2D tex, tex2;
+	Rect playRect, creditRect, exitRect;
+	Ray ray;
+	RaycastHit hit;
 
     public enum GameState
     {
@@ -36,22 +42,35 @@ public class GameManager : MonoBehaviour
         players = new Dictionary<int, Player>(2);
         DontDestroyOnLoad(this);
 
+
         CreatePlayer("Luciano");
         CreatePlayer("Brian");
 
         m_nPlayerCount = players.Count;
         m_fWinTimer = 3.0f;
+
+
     }
 
     // Update is called once per frame
     private void Update()
     {
+
         if (m_nPlayerCount <= 1)
             currentState = GameState.Win;
+
+       // if (players.Count == 1)
+         //   currentState = GameState.Win;
+
 
         switch (currentState)
         {
             case GameState.MainMenu:
+			ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			if(Physics.Raycast(ray, out hit))
+			{
+				print (hit.collider.name);
+			}
                 break;
 
             case GameState.Fighting:
@@ -87,6 +106,10 @@ public class GameManager : MonoBehaviour
     public void CreatePlayer(string _name)
     {
         Player newPlayer = Instantiate(playerPrefab);
+		//playerPrefab = new Player ();
+
+		//Player newPlayer = playerPrefab;
+
         newPlayer.id = players.Count + 1;
 
         Vector3 startingPos = new Vector3(15.6f, 16.8f, -7.0f);
@@ -168,6 +191,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
     public void WinMessege()
     {
         GameObject p = GameObject.FindGameObjectWithTag("Player");
@@ -179,9 +203,29 @@ public class GameManager : MonoBehaviour
 
     private void OnGUI()
     {
+        GUIStyle gStyle = new GUIStyle();
+
+        tex = (Texture2D)Resources.Load("button");
+        tex2 = (Texture2D)Resources.Load("buttonActive");
+
+        GUI.backgroundColor = Color.clear;
+        GUI.Button(playRect, new GUIContent(tex));
+        GUI.Button(creditRect, new GUIContent(tex));
+        GUI.Button(exitRect, new GUIContent(tex));
+        //if (myRect.Contains(Input.mousePosition)) {
+
+        //	GUI.Button (myRect, new GUIContent(tex2));
+        //}
         GUIStyle style = new GUIStyle();
         style.fontSize = 52;
         style.normal.textColor = Color.green;
         GUI.Label(new Rect(Screen.width / 2.0f - Screen.width / 6, Screen.height / 2.0f, 200.0f, 100.0f), m_sWinMessege, style);
     }
+	public void StartGame()
+	{
+
+
+		setState (GameState.Fighting);
+	}
+
 }
