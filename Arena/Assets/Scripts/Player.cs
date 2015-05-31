@@ -128,6 +128,7 @@ public class Player : MonoBehaviour
         {
             // Showdown
             gm.GoShowdown(this, collGO.GetComponent<Player>());
+            PRB.velocity = new Vector3(0, 0, 0);
         }
 
         if (collGO.tag == "Projectile" && collGO.GetComponent<Projectile>().owner != this)

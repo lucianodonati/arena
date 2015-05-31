@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public float killTimer = 5;
+    public float killTimer = 3.0f;
     private Vector3 vel = new Vector3(1, 1, 1);
     private Vector3 pos = new Vector3(0, 0, 0);
     public Player owner;
