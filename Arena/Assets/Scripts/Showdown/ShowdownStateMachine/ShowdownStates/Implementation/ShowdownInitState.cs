@@ -5,7 +5,7 @@
     /// <summary>
     /// Default Constructor - sets this states BattleStateType.
     /// </summary>
-    public ShowdownInitState(bool transitionOnly=false)
+    public ShowdownInitState(bool transitionOnly)
     {
         this.StateType = ShowdownState.ShowdownStateType.ShowdownInitState;
         if (transitionOnly == false)
