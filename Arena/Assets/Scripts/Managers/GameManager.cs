@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     public int m_nRounds;
     public int[] m_nScores;
 
+    private float roundTimer = 10.0f;
+
     public Camera mainCamera, showdownCamera;
     public GameObject HUD;
 
@@ -96,18 +98,23 @@ public class GameManager : MonoBehaviour
                     m_fWinTimer = 3.0f;
                     currentState = GameState.Fighting;
                     m_nPlayerCount = players.Count;
-                    Application.LoadLevel(Application.loadedLevel);
+                    if (EndRound())
+                        Application.LoadLevel(0);
+                    else
+                        Application.LoadLevel(Application.loadedLevel);
                     Destroy(this.gameObject);
                 }
                 break;
 
             case GameState.RoundEnd:
+
                 if (EndRound())
                 {
-                    Application.LoadLevel(0);
+                    break;
                 }
                 currentState = GameState.Fighting;
                 m_nPlayerCount = players.Count;
+
                 break;
 
             default:
