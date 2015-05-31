@@ -42,11 +42,9 @@ public class Projectile_Spawner : MonoBehaviour
             float xAxis = Input.GetAxisRaw("RightStickXC" + daddy.id);
             float yAxis = Input.GetAxisRaw("RightStickYC" + daddy.id);
 
-
-
             float angle2 = Mathf.Atan2(yAxis, xAxis);
             float angle3 = Mathf.Rad2Deg * angle2;
-      
+
             float angle = (xAxis + yAxis * 90);
 
             transform.parent.transform.rotation = Quaternion.Euler(new Vector3(0, 0, -angle3));
@@ -57,9 +55,7 @@ public class Projectile_Spawner : MonoBehaviour
                 //Checks to see if the player can fire a projectile
                 if (canFire)
                 {
-            
                     ShootFireball();
-                     
                 }
             }
         }
@@ -72,14 +68,11 @@ public class Projectile_Spawner : MonoBehaviour
 
         canFire = !canFire;
         Projectile FB = (Projectile)Instantiate(fireball, transform.position, transform.rotation);
-        
+
         FB.owner = GameObject.Find("Player " + daddy.id).GetComponent<Player>();
-        
+
         Vector2 aimDirection = new Vector2((fbSpeed * xAxis * Time.deltaTime), -(fbSpeed * yAxis * Time.deltaTime));
 
         FB.GetComponent<Rigidbody2D>().velocity = aimDirection;
-
-
-        
     }
 }

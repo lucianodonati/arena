@@ -4,7 +4,7 @@ using UnityEngine;
 public class Platform : MonoBehaviour
 {
     public float shrinkTimer = 15.0f;
-    private float gameTimer;
+    private float gameTimer = 0.0f;
     //bool shrinking = false;
 
     // Use this for initialization
@@ -16,13 +16,16 @@ public class Platform : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        gameTimer += Time.deltaTime;
-
-        if (gameTimer >= shrinkTimer)
+        if (gameTimer < 0.0f)
         {
-            gameTimer = 0.0f;
-            Vector3 reductionAmt = new Vector3(10.0f, 10.0f, 0.0f);
-            transform.localScale = transform.localScale - reductionAmt;
+            if (transform.localScale.x > 10.0f)
+            {
+                gameTimer = shrinkTimer;
+                Vector3 reductionAmt = new Vector3(10.0f, 10.0f, 0.0f);
+                transform.localScale = transform.localScale - reductionAmt;
+            }
         }
+        else
+            gameTimer -= Time.deltaTime;
     }
 }
