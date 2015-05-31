@@ -13,9 +13,8 @@ public class PlayerController : MonoBehaviour
     public float shieldCD = 7.0f;
     public float shieldTimer = 0.8f;
 
-        private Image Blink;
+    private Image Blink;
     private Image Shield;
-
 
     // Use this for initialization
     private void Start()
@@ -30,7 +29,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-     //   string[] meh = Input.GetJoystickNames();
+        //   string[] meh = Input.GetJoystickNames();
 
         shieldCD -= Time.deltaTime;
         if (shielded == true)
@@ -42,15 +41,18 @@ public class PlayerController : MonoBehaviour
                 shieldTimer = 0.8f;
             }
         }
+        else
+            GetComponent<SpriteRenderer>().color = player.myColor;
 
         if (Input.GetButtonDown("ShieldC" + player.id.ToString()) && shieldCD <= 0)
         {
+            GetComponent<SpriteRenderer>().color = Color.yellow;
+
             Shield.CrossFadeAlpha(0.0f, 0.0f, true);
             shielded = true;
             shieldCD = 7.0f;
             Shield.CrossFadeAlpha(1.0f, shieldCD, false);
         }
-
 
         if (GameObject.Find("GameManager").GetComponent<GameManager>().currentState == GameManager.GameState.Showdown)
         {
