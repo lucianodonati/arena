@@ -94,7 +94,7 @@ public class Player : MonoBehaviour
 
         blinkCD.text = gameObject.GetComponent<PlayerController>().blinkCD.ToString();
         // Timers
-        if (onLava)
+        if (onLava && GameObject.Find("GameManager").GetComponent<GameManager>().currentState != GameManager.GameState.Showdown)
         {
             if (lavaTimer <= 0.0f)
             {
@@ -127,7 +127,6 @@ public class Player : MonoBehaviour
 
         takeDamage(50.0f);
     }
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -174,7 +173,6 @@ public class Player : MonoBehaviour
         if (collGO.tag == "Platform")
         {
             // Playsound
-
             Lava theLava = GameObject.Find("Lava").GetComponent<Lava>();
             ticEvery = theLava.ticTimer;
             lavaDamage = theLava.damage;
