@@ -23,7 +23,6 @@ public class SoundPlayer : MonoBehaviour
 
     public void PlaySound(string _sound)
     {
-        Debug.Log(_sound);
         audioSource.clip = getRandomClip(_sound);
         if (audioSource.clip == null)
             Debug.LogError("Trying to play: " + _sound + " ,but is not assigned.");

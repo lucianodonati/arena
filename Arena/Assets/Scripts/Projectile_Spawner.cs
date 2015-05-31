@@ -27,57 +27,62 @@ public class Projectile_Spawner : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (!canFire)
+        if (GameObject.Find("GameManager").GetComponent<GameManager>().currentState != GameManager.GameState.Showdown) ;
         {
-            gameTime += Time.deltaTime;
 
-            if (gameTime >= shootTimer)
+
+            if (!canFire)
             {
-                canFire = !canFire;
-                gameTime = 0.0f;
-            }
-        }
+                gameTime += Time.deltaTime;
 
-        float xAxis = Input.GetAxisRaw("RightStickXC" + daddy.id);
-        float yAxis = Input.GetAxisRaw("RightStickYC" + daddy.id);
-
-        // xAxis = Mathf.Abs(xAxis);
-        //  yAxis = Mathf.Abs(yAxis);
-
-        float angle2 = Mathf.Atan2(yAxis, xAxis);
-        float angle3 = Mathf.Rad2Deg * angle2;
-        //Vector3 aimDirection = new Vector3(xAxis, yAxis, 0);
-        //float angle = Vector3.Angle(aimDirection, new Vector3(0, 0, 1));
-        //Vector3 cross = Vector3.Cross(aimDirection, new Vector3(0, 0, 1));
-        //if (cross.z > 0)
-        //    angle = 360 - angle;
-        //if (xAxis != 0 && yAxis != 0)
-        //{
-        //    //     transform.RotateAround(daddy.transform.position, Vector3.back, angle);
-        //}
-        float angle = (xAxis + yAxis * 90);
-
-        transform.parent.transform.rotation = Quaternion.Euler(new Vector3(0, 0, -angle3));
-
-        //Have the spawner create a projectile when the player presses the button
-        if (Input.GetAxisRaw("Fire" + daddy.id) > 0.0f)
-        {
-            //Checks to see if the player can fire a projectile
-            if (canFire)
-            {
-                canFire = !canFire;
-                Projectile FB = (Projectile)Instantiate(fireball, transform.position, transform.rotation);
-                //FB.RB.position = this.transform.position;
-                FB.owner = GameObject.Find("Player " + daddy.id).GetComponent<Player>();
-
+                if (gameTime >= shootTimer)
                 {
-                    print("X " + xAxis);
-                    print("Y " + yAxis);
-                    print(angle);
+                    canFire = !canFire;
+                    gameTime = 0.0f;
+                }
+            }
 
-                    Vector2 aimDirection = new Vector2((fbSpeed * xAxis * Time.deltaTime), -(fbSpeed * yAxis * Time.deltaTime));
+            float xAxis = Input.GetAxisRaw("RightStickXC" + daddy.id);
+            float yAxis = Input.GetAxisRaw("RightStickYC" + daddy.id);
 
-                    FB.GetComponent<Rigidbody2D>().velocity = aimDirection;
+            // xAxis = Mathf.Abs(xAxis);
+            //  yAxis = Mathf.Abs(yAxis);
+
+            float angle2 = Mathf.Atan2(yAxis, xAxis);
+            float angle3 = Mathf.Rad2Deg * angle2;
+            //Vector3 aimDirection = new Vector3(xAxis, yAxis, 0);
+            //float angle = Vector3.Angle(aimDirection, new Vector3(0, 0, 1));
+            //Vector3 cross = Vector3.Cross(aimDirection, new Vector3(0, 0, 1));
+            //if (cross.z > 0)
+            //    angle = 360 - angle;
+            //if (xAxis != 0 && yAxis != 0)
+            //{
+            //    //     transform.RotateAround(daddy.transform.position, Vector3.back, angle);
+            //}
+            float angle = (xAxis + yAxis * 90);
+
+            transform.parent.transform.rotation = Quaternion.Euler(new Vector3(0, 0, -angle3));
+
+            //Have the spawner create a projectile when the player presses the button
+            if (Input.GetAxisRaw("Fire" + daddy.id) < 0.0f)
+            {
+                //Checks to see if the player can fire a projectile
+                if (canFire)
+                {
+                    canFire = !canFire;
+                    Projectile FB = (Projectile)Instantiate(fireball, transform.position, transform.rotation);
+                    //FB.RB.position = this.transform.position;
+                    FB.owner = GameObject.Find("Player " + daddy.id).GetComponent<Player>();
+
+                    {
+                        print("X " + xAxis);
+                        print("Y " + yAxis);
+                        print(angle);
+
+                        Vector2 aimDirection = new Vector2((fbSpeed * xAxis * Time.deltaTime), -(fbSpeed * yAxis * Time.deltaTime));
+
+                        FB.GetComponent<Rigidbody2D>().velocity = aimDirection;
+                    }
                 }
             }
         }

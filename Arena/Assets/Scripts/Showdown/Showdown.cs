@@ -35,7 +35,7 @@ public class Showdown : MonoBehaviour
             instance = this;
         }
 
-        stateMachine = new ShowdownStateMachine(new ShowdownInitState());
+        stateMachine = new ShowdownStateMachine(new ShowdownInitState(false));
     }
 
     #endregion Singleton
