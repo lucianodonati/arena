@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
                     currentState = GameState.Fighting;
                     m_nPlayerCount = players.Count;
                     Application.LoadLevel(Application.loadedLevel);
-                    Destroy(this.gameObject); 
+                    Destroy(this.gameObject);
                 }
                 break;
 
@@ -164,14 +164,12 @@ public class GameManager : MonoBehaviour
         m_sWinMessege = name + " WINS";
     }
 
-    void OnGUI()
+    private void OnGUI()
     {
-
         GUIStyle style = new GUIStyle();
         style.fontSize = 52;
         style.normal.textColor = Color.green;
         style.font = (Font)Resources.Load("full Pack 2025", typeof(Font));
-        GUI.Label(new Rect(Screen.width/2.0f - Screen.width/6 ,Screen.height/2.0f, 200.0f, 100.0f),m_sWinMessege,style);
-
+        GUI.Label(new Rect(Screen.width / 2.0f - Screen.width / 6, Screen.height / 2.0f, 200.0f, 100.0f), m_sWinMessege, style);
     }
 }
