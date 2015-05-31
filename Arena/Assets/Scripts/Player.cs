@@ -6,11 +6,13 @@ public class Player : MonoBehaviour
     // If you need to see a variable, comment out the [HideInInspector] and when you're done debugging put it back =)
 
     #region PlayerStuff
+    public int enemyID;
     public int id;
     public Color myColor;
     public string playerName;
     private Renderer myRenderer;
     private GameManager gm;
+    public Player enemy;
 
     //[HideInInspector]
     public float percentage = 0.0f;
@@ -44,6 +46,18 @@ public class Player : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
+
+        if (id == 1)
+        {
+            enemy = GameObject.Find("Player 2").GetComponent<Player>();
+            enemyID = 2;
+        }
+        else if (id == 2)
+        {
+            enemy = GameObject.Find("Player 1").GetComponent<Player>();
+            enemyID = 1;
+        }
+
         myRenderer = GetComponent<Renderer>();
         PRB = GetComponent<Rigidbody2D>();
         sounds = GetComponent<SoundPlayer>();

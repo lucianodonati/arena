@@ -77,10 +77,8 @@ public class Projectile_Spawner : MonoBehaviour
 
                         FB.GetComponent<Rigidbody2D>().velocity = aimDirection;
 
-                        //Vector2 toTarget = (Vector2)player.position - (Vector2)transform.position;
-                        //Vector2 newDirection = Vector2.Lerp(rigidbody2D.velocity.normalized, toTarget.normalized, Time.deltaTime * 30);
-                        //rigidbody2D.velocity = newDirection * speed * 2;
 
+                       
                     }
                 }
             }
