@@ -45,10 +45,18 @@ public class GameManager : MonoBehaviour
         players = new Dictionary<int, Player>(2);
         DontDestroyOnLoad(this);
 
-        Menu mnu = GameObject.Find("MenuHandler").GetComponent<Menu>();
+        if (GameObject.Find("MenuHandler") != null)
+        {
+            Menu mnu = GameObject.Find("MenuHandler").GetComponent<Menu>();
 
-        player1 = CreatePlayer(mnu.p1Name);
-        player2 = CreatePlayer(mnu.p2Name);
+            player1 = CreatePlayer(mnu.p1Name);
+            player2 = CreatePlayer(mnu.p2Name);
+        }
+        else
+        {
+            player1 = CreatePlayer("Player 1");
+            player2 = CreatePlayer("Player 2");
+        }
 
         m_nPlayerCount = players.Count;
         m_fWinTimer = 3.0f;
