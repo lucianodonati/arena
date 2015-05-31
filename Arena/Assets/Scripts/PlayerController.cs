@@ -23,15 +23,10 @@ public class PlayerController : MonoBehaviour
 
         if (GameObject.Find("GameManager").GetComponent<GameManager>().currentState == GameManager.GameState.Showdown)
         {
-            print(Input.GetAxisRaw("ShowdownButton"));
             if (Input.GetAxisRaw("ShowdownButton") == -1 && player.id == 2)
-            {
                 Showdown.GetInstance().ExecuteAttack(player);
-            }
             if (Input.GetAxisRaw("ShowdownButton") == 1 && player.id == 1)
-            {
                 Showdown.GetInstance().ExecuteAttack(player);
-            }
         }
         else
         {

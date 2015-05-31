@@ -126,11 +126,15 @@ public class Showdown : MonoBehaviour
 
     public SoundPlayer sounds;
 
+    public GameObject sfx;
+
     // Use this for initialization
 
     private void Start()
     {
         sounds.PlaySound("Start");
+        sfx = GameObject.Find("Sounds");
+        sfx.SetActive(false);
     }
 
     /// <summary>
@@ -189,6 +193,7 @@ public class Showdown : MonoBehaviour
 
         gm.setState("Fighting");
         gm.EndShowdown();
+        sfx.SetActive(true);
 
         Destroy(gameObject);
     }

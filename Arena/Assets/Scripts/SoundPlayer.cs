@@ -25,15 +25,12 @@ public class SoundPlayer : MonoBehaviour
     public void PlaySound(string _sound)
     {
         AudioClip theClip = getRandomClip(_sound);
-        if (audioSource != null)
-        {
-            audioSource = gameObject.GetComponent<AudioSource>();
-            audioSource.clip = theClip;
-            if (audioSource.clip == null)
-                Debug.LogError("Trying to play: " + _sound + " ,but is not assigned.");
-            else
-                audioSource.Play();
-        }
+        audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource.clip = theClip;
+        if (audioSource.clip == null)
+            Debug.LogError("Trying to play: " + _sound + " ,but is not assigned.");
+        else
+            audioSource.Play();
     }
 
     private AudioClip getRandomClip(string _sound)
