@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class SoundPlayer : MonoBehaviour
 {
     [System.Serializable]
@@ -18,7 +19,7 @@ public class SoundPlayer : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
-        audioSource = gameObject.AddComponent<AudioSource>();
+        //audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     public void PlaySound(string _sound)
@@ -26,6 +27,7 @@ public class SoundPlayer : MonoBehaviour
         AudioClip theClip = getRandomClip(_sound);
         if (theClip != null)
         {
+            audioSource = gameObject.GetComponent<AudioSource>();
             audioSource.clip = theClip;
             if (audioSource.clip == null)
                 Debug.LogError("Trying to play: " + _sound + " ,but is not assigned.");

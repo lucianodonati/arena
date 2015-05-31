@@ -1,16 +1,16 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
-public class ShowdownAnimation : MonoBehaviour 
+public class ShowdownAnimation : MonoBehaviour
 {
     [SerializeField]
-    private Animator animator1;
+    private Animator animator1 = null;
 
     [SerializeField]
-    private Animator animator2;
+    private Animator animator2 = null;
 
     [SerializeField]
-    private Animator animator3;
+    private Animator animator3 = null;
 
     public void StartShowdown()
     {

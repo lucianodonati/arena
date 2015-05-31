@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     public GameObject HUD;
 
     private Texture2D tex, tex2;
-    private Rect playRect, creditRect, exitRect;
+    private Rect playRect = new Rect(), creditRect = new Rect(), exitRect = new Rect();
     private Ray ray;
     private RaycastHit hit;
 
@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviour
             case GameState.RoundEnd:
                 if (EndRound())
                 {
-                    break;
+                    Application.LoadLevel(0);
                 }
                 currentState = GameState.Fighting;
                 m_nPlayerCount = players.Count;
@@ -173,6 +173,10 @@ public class GameManager : MonoBehaviour
         {
             showdown1 = p1;
             showdown2 = p2;
+
+            showdown1.SetColor();
+            showdown2.SetColor();
+
             setState("Showdown");
             Showdown temp = Instantiate(showdownPrefab);
 
@@ -249,8 +253,6 @@ public class GameManager : MonoBehaviour
 
     private void OnGUI()
     {
-        GUIStyle gStyle = new GUIStyle();
-
         tex = (Texture2D)Resources.Load("button");
         tex2 = (Texture2D)Resources.Load("buttonActive");
 
