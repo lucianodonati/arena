@@ -31,14 +31,7 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
-		playRect = new Rect (500.0f, 100.0f, 400, 150);
-		
-		creditRect = new Rect (500.0f, 700.0f, 400, 150);
-		
-		exitRect = new Rect (500.0f, 900.0f, 400, 50);
-
-        players = new Dictionary<int, Player>(Input.GetJoystickNames().Length);
-        Debug.Log(Input.GetJoystickNames().Length + " players detected");
+        players = new Dictionary<int, Player>(2);
         DontDestroyOnLoad(this);
 
 
@@ -91,7 +84,7 @@ public class GameManager : MonoBehaviour
                     currentState = GameState.Fighting;
                     m_nPlayerCount = players.Count;
                     Application.LoadLevel(Application.loadedLevel);
-                    Destroy(this.gameObject); 
+                    Destroy(this.gameObject);
                 }
                 break;
 
@@ -194,33 +187,26 @@ public class GameManager : MonoBehaviour
         m_sWinMessege = name + " WINS";
     }
 
-	//static function IsMouseOver() : boolean
-	//{
-	//	return Event.current.type == EventType.Repaint && GUILayoutUtility.GetLastRect()
-	//}
+    private void OnGUI()
+    {
+        GUIStyle gStyle = new GUIStyle();
 
-	void OnGUI()
-	{
-		GUIStyle gStyle = new GUIStyle ();
-		
-		tex = (Texture2D)Resources.Load ("button");
-		tex2 = (Texture2D)Resources.Load ("buttonActive");
-		
-		GUI.backgroundColor = Color.clear;
-		GUI.Button (playRect, new GUIContent(tex));
-		GUI.Button (creditRect, new GUIContent(tex));
-		GUI.Button (exitRect, new GUIContent(tex));
-		//if (myRect.Contains(Input.mousePosition)) {
-		
-		//	GUI.Button (myRect, new GUIContent(tex2));
-		//}
-         GUIStyle style = new GUIStyle();
+        tex = (Texture2D)Resources.Load("button");
+        tex2 = (Texture2D)Resources.Load("buttonActive");
+
+        GUI.backgroundColor = Color.clear;
+        GUI.Button(playRect, new GUIContent(tex));
+        GUI.Button(creditRect, new GUIContent(tex));
+        GUI.Button(exitRect, new GUIContent(tex));
+        //if (myRect.Contains(Input.mousePosition)) {
+
+        //	GUI.Button (myRect, new GUIContent(tex2));
+        //}
+        GUIStyle style = new GUIStyle();
         style.fontSize = 52;
         style.normal.textColor = Color.green;
-        style.font = (Font)Resources.Load("full Pack 2025", typeof(Font));
-        GUI.Label(new Rect(Screen.width/2.0f - Screen.width/6 ,Screen.height/2.0f, 200.0f, 100.0f),m_sWinMessege,style);
-	}
-
+        GUI.Label(new Rect(Screen.width / 2.0f - Screen.width / 6, Screen.height / 2.0f, 200.0f, 100.0f), m_sWinMessege, style);
+    }
 	public void StartGame()
 	{
 

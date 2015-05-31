@@ -45,7 +45,8 @@ public class Showdown : MonoBehaviour
     [SerializeField]
     private GameObject showdownCanvas = null;
 
-    private Camera showdownCamera;
+    private Camera mainCamera, showdownCamera;
+    private GameObject HUD;
 
     [SerializeField]
     private float suspenseLowerLimit = 1.0f;
@@ -127,7 +128,10 @@ public class Showdown : MonoBehaviour
 
     private void Start()
     {
+        mainCamera = Camera.main;
         showdownCamera = GameObject.Find("ShowdownCamera").GetComponent<Camera>();
+        showdownCamera.enabled = false;
+        HUD = GameObject.Find("HUD");
     }
 
     /// <summary>
@@ -147,7 +151,7 @@ public class Showdown : MonoBehaviour
     private void toggleCams()
     {
         showdownCamera.enabled = !showdownCamera.enabled;
-        Camera.main.enabled = !Camera.main.enabled;
+        mainCamera.enabled = !mainCamera.enabled;
     }
 
     /// <summary>
@@ -158,6 +162,7 @@ public class Showdown : MonoBehaviour
         this.player1 = player1;
         this.player2 = player2;
 
+        HUD.SetActive(false);
         toggleCams();
 
         attackMap.Clear();
@@ -176,6 +181,10 @@ public class Showdown : MonoBehaviour
     public void DisplayWinner(Player player)
     {
         this.winnerName.text = player.playerName;
+        if (player == player1)
+            player2.pushBack(player1.GetComponent<Rigidbody2D>().velocity);
+        else
+            player1.pushBack(player2.GetComponent<Rigidbody2D>().velocity);
     }
 
     public void Fight()
@@ -223,6 +232,8 @@ public class Showdown : MonoBehaviour
         ShowdownAttack player2Attack = null;
 
         toggleCams();
+        HUD.SetActive(true);
+
         if (attackMap.TryGetValue(player1.playerName, out player1Attack))
         {
             if (attackMap.TryGetValue(player2.playerName, out player2Attack))

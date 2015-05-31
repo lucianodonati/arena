@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private bool onePress = true;
     public float blinkDist = 11.0f;
     public float blinkCD = 5.0f;
+
     // Use this for initialization
     private void Start()
     {
@@ -23,11 +24,9 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetButtonDown("ShowdownButton" + player.id) && onePress)
             {
-
                 Showdown.GetInstance().ExecuteAttack(player);
                 onePress = false;
             }
-
         }
         else
         {
@@ -49,7 +48,6 @@ public class PlayerController : MonoBehaviour
             //PRB.velocity += new Vector2(playerVelocityX, -playerVelocityY);
             PRB.AddForce(new Vector2(playerVelocityX, -playerVelocityY));
 
-
             float xAxis = Input.GetAxisRaw("RightStickXC" + player.id);
             float yAxis = Input.GetAxisRaw("RightStickYC" + player.id);
 
@@ -67,12 +65,7 @@ public class PlayerController : MonoBehaviour
 
                 PRB.velocity = new Vector2(0, 0);
                 PRB.AddForce(new Vector2(playerVelocityX, -playerVelocityY));
-
             }
-
-
-
-
         }
     }
 }

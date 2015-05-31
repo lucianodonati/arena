@@ -20,6 +20,11 @@ public class Projectile : MonoBehaviour
         killTimer -= Time.deltaTime;
         if (killTimer <= 0.0f)
             Destroy(gameObject);
+
+        Vector2 toTarget = (Vector2)owner.enemy.transform.position - (Vector2)transform.position;
+        Vector2 newDirection = Vector2.Lerp(GetComponent<Rigidbody2D>().velocity.normalized, toTarget.normalized, Time.deltaTime * 1.7f);
+        GetComponent<Rigidbody2D>().velocity = newDirection * 100;
+
     }
 
     private void OnTriggerEnter2D(Collider2D hit)
