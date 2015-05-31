@@ -6,7 +6,6 @@ public class PlayerController : MonoBehaviour
     public float playerSpeed = 10000.0f;
     private Rigidbody2D PRB;
     private Player player;
-    private bool onePress = true;
     public float blinkDist = 11.0f;
     public float blinkCD = 5.0f;
 
@@ -22,11 +21,8 @@ public class PlayerController : MonoBehaviour
     {
         if (GameObject.Find("GameManager").GetComponent<GameManager>().currentState == GameManager.GameState.Showdown)
         {
-            if (Input.GetButtonDown("ShowdownButton" + player.id) && onePress)
-            {
+            if (Input.GetButtonDown("ShowdownButton" + player.id))
                 Showdown.GetInstance().ExecuteAttack(player);
-                onePress = false;
-            }
         }
         else
         {
