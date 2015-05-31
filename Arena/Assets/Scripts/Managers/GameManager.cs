@@ -16,18 +16,20 @@ public class GameManager : MonoBehaviour
     public int m_nPlayerCount;
     public float m_fWinTimer;
     public string m_sWinMessege;
+    public int m_nRounds;
+    public int[] m_nScores;
 
     public Camera mainCamera, showdownCamera;
     public GameObject HUD;
 
-	Texture2D tex, tex2;
-	Rect playRect, creditRect, exitRect;
-	Ray ray;
-	RaycastHit hit;
+    Texture2D tex, tex2;
+    Rect playRect, creditRect, exitRect;
+    Ray ray;
+    RaycastHit hit;
 
     public enum GameState
     {
-        MainMenu, Fighting, Showdown, Win
+        MainMenu, Fighting, Showdown, Win, RoundEnd
     }
 
     public GameState currentState = GameState.MainMenu;
@@ -48,8 +50,10 @@ public class GameManager : MonoBehaviour
 
         m_nPlayerCount = players.Count;
         m_fWinTimer = 3.0f;
-
-
+        m_nRounds = 3;
+        m_nScores = new int[2];
+        m_nScores[0] = 0;
+        m_nScores[1] = 0;
     }
 
     // Update is called once per frame
@@ -57,20 +61,25 @@ public class GameManager : MonoBehaviour
     {
 
         if (m_nPlayerCount <= 1)
-            currentState = GameState.Win;
+        {
+            if (currentState != GameState.Win)
+            {
+            currentState = GameState.RoundEnd;
+            }
+        }
 
-       // if (players.Count == 1)
-         //   currentState = GameState.Win;
+        // if (players.Count == 1)
+        //   currentState = GameState.Win;
 
 
         switch (currentState)
         {
             case GameState.MainMenu:
-			ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			if(Physics.Raycast(ray, out hit))
-			{
-				print (hit.collider.name);
-			}
+                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out hit))
+                {
+                    print(hit.collider.name);
+                }
                 break;
 
             case GameState.Fighting:
@@ -95,6 +104,14 @@ public class GameManager : MonoBehaviour
                     Destroy(this.gameObject);
                 }
                 break;
+            case GameState.RoundEnd:
+                if (EndRound())
+                {
+                    break;
+                }
+                currentState = GameState.Fighting;
+                m_nPlayerCount = players.Count;
+                break;
 
             default:
                 break;
@@ -106,9 +123,9 @@ public class GameManager : MonoBehaviour
     public void CreatePlayer(string _name)
     {
         Player newPlayer = Instantiate(playerPrefab);
-		//playerPrefab = new Player ();
+        //playerPrefab = new Player ();
 
-		//Player newPlayer = playerPrefab;
+        //Player newPlayer = playerPrefab;
 
         newPlayer.id = players.Count + 1;
 
@@ -137,6 +154,8 @@ public class GameManager : MonoBehaviour
                 newPlayer.myColor = Color.magenta;
                 break;
         }
+
+        newPlayer.m_vStartingPosition = startingPos;
         newPlayer.transform.position = startingPos;
 
         newPlayer.playerName = _name;
@@ -201,6 +220,38 @@ public class GameManager : MonoBehaviour
         m_sWinMessege = name + " WINS";
     }
 
+    public bool EndRound()
+    {
+        GameObject[] p = GameObject.FindGameObjectsWithTag("Player");
+        Player tempPlayer1 = p[0].GetComponent<Player>();
+        Player tempPlayer2 = p[1].GetComponent<Player>();
+        Player tempPlayer;
+        if (tempPlayer1.alive == true)
+        {
+            tempPlayer = tempPlayer1;
+        }
+        else
+        {
+            tempPlayer = tempPlayer2;
+        }
+
+        m_nScores[tempPlayer.id - 1]++;
+
+        if (m_nScores[tempPlayer.id - 1] >= m_nRounds / 2 + 1)
+        {
+            currentState = GameState.Win;
+            return true;
+        }
+
+        tempPlayer1.alive = true;
+        tempPlayer2.alive = true;
+
+        tempPlayer1.transform.position = tempPlayer1.m_vStartingPosition;
+        tempPlayer2.transform.position = tempPlayer2.m_vStartingPosition;
+        m_nPlayerCount++;
+        return false;
+    }
+
     private void OnGUI()
     {
         GUIStyle gStyle = new GUIStyle();
@@ -212,8 +263,8 @@ public class GameManager : MonoBehaviour
         GUI.Button(playRect, new GUIContent(tex));
         GUI.Button(creditRect, new GUIContent(tex));
         GUI.Button(exitRect, new GUIContent(tex));
-        //if (myRect.Contains(Input.mousePosition)) {
 
+        //if (myRect.Contains(Input.mousePosition)) {
         //	GUI.Button (myRect, new GUIContent(tex2));
         //}
         GUIStyle style = new GUIStyle();
@@ -221,11 +272,9 @@ public class GameManager : MonoBehaviour
         style.normal.textColor = Color.green;
         GUI.Label(new Rect(Screen.width / 2.0f - Screen.width / 6, Screen.height / 2.0f, 200.0f, 100.0f), m_sWinMessege, style);
     }
-	public void StartGame()
-	{
-
-
-		setState (GameState.Fighting);
-	}
+    public void StartGame()
+    {
+        setState(GameState.Fighting);
+    }
 
 }

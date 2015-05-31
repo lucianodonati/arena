@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     private Renderer myRenderer;
     private GameManager gm;
     public Player enemy;
+    public Vector3 m_vStartingPosition;
 
     //[HideInInspector]
     public float percentage = 0.0f;
@@ -28,7 +29,6 @@ public class Player : MonoBehaviour
     #region GUI
 
     private Text percText;
-
     #endregion GUI
 
     #region Sounds
@@ -65,7 +65,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (gm.m_fWinTimer < 3.0f)
+        if (gm.m_fWinTimer < 3.0f || alive == false)
         {
             return;
         }
@@ -163,7 +163,7 @@ public class Player : MonoBehaviour
         {
             //DIE
             gm.m_nPlayerCount--;
-            Destroy(this.gameObject);
+            alive = false;
         }
     }
 }
