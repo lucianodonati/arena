@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
     public float playerSpeed = 10000.0f;
     private Rigidbody2D PRB;
     private Player player;
-
+    private bool onePress = true;
     // Use this for initialization
     private void Start()
     {
@@ -18,10 +18,14 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         if (GameObject.Find("GameManager").GetComponent<GameManager>().currentState == GameManager.GameState.Showdown)
-        {
-            if (Input.GetButtonDown("ShowdownButton" + player.id))
+            if (Input.GetButtonDown("ShowdownButton" + player.id) && onePress)
+            {
+
                 Showdown.GetInstance().ExecuteAttack(player);
-        }
+                onePress = false;
+            }
+
+
         float playerVelocityX = 0, playerVelocityY = 0;
         {
             float axis = Input.GetAxisRaw("LeftStickXC" + player.id);
