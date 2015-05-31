@@ -151,7 +151,7 @@ public class Player : MonoBehaviour
 
             takeDamage(10.0f);
 
-            //Destroy(collGO);
+            Destroy(collGO);
         }
         else if (collGO.tag == "Projectile" && collGO.GetComponent<Projectile>().owner != this && gameObject.GetComponent<PlayerController>().shielded == true)
         {
