@@ -7,7 +7,7 @@ public class ShowdownSuspenseState : ShowdownState
     /// <summary>
     /// Default Constructor - sets this states BattleStateType.
     /// </summary>
-    public ShowdownSuspenseState(bool transitionOnly=false)
+    public ShowdownSuspenseState(bool transitionOnly)
     {
         this.StateType = ShowdownState.ShowdownStateType.ShowdownSuspenseState;
         if (transitionOnly == false)

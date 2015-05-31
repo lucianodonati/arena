@@ -11,6 +11,10 @@ public class GameManager : MonoBehaviour
     public Showdown showdown;
     public Player showdown1, showdown2;
     public int rounds = 1;
+	Texture2D tex, tex2;
+	Rect playRect, creditRect, exitRect;
+	Ray ray;
+	RaycastHit hit;
 
     public enum GameState
     {
@@ -22,23 +26,36 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
+		playRect = new Rect (500.0f, 100.0f, 400, 150);
+		
+		creditRect = new Rect (500.0f, 700.0f, 400, 150);
+		
+		exitRect = new Rect (500.0f, 900.0f, 400, 50);
+
         players = new Dictionary<int, Player>(Input.GetJoystickNames().Length);
         Debug.Log(Input.GetJoystickNames().Length + " players detected");
         DontDestroyOnLoad(this);
 
-        CreatePlayer("Luciano");
-        CreatePlayer("Brian");
+		CreatePlayer("Luciano");
+		CreatePlayer("Brian");
+
+
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (players.Count == 1)
-            currentState = GameState.Win;
+       // if (players.Count == 1)
+         //   currentState = GameState.Win;
 
         switch (currentState)
         {
             case GameState.MainMenu:
+			ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			if(Physics.Raycast(ray, out hit))
+			{
+				print (hit.collider.name);
+			}
                 break;
 
             case GameState.Fighting:
@@ -63,6 +80,10 @@ public class GameManager : MonoBehaviour
     public void CreatePlayer(string _name)
     {
         Player newPlayer = Instantiate(playerPrefab);
+		//playerPrefab = new Player ();
+
+		//Player newPlayer = playerPrefab;
+
         newPlayer.id = players.Count + 1;
 
         Vector3 startingPos = new Vector3(15.6f, 16.8f, -7.0f);
@@ -137,4 +158,34 @@ public class GameManager : MonoBehaviour
             Debug.LogError(e.Message);
         }
     }
+
+	//static function IsMouseOver() : boolean
+	//{
+	//	return Event.current.type == EventType.Repaint && GUILayoutUtility.GetLastRect()
+	//}
+
+	void OnGUI()
+	{
+		GUIStyle gStyle = new GUIStyle ();
+		
+		tex = (Texture2D)Resources.Load ("button");
+		tex2 = (Texture2D)Resources.Load ("buttonActive");
+		
+		GUI.backgroundColor = Color.clear;
+		GUI.Button (playRect, new GUIContent(tex));
+		GUI.Button (creditRect, new GUIContent(tex));
+		GUI.Button (exitRect, new GUIContent(tex));
+		//if (myRect.Contains(Input.mousePosition)) {
+		
+		//	GUI.Button (myRect, new GUIContent(tex2));
+		//}
+	}
+
+	public void StartGame()
+	{
+
+
+		setState (GameState.Fighting);
+	}
+
 }
