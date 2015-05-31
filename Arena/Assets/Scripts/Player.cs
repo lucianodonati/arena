@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class Player : MonoBehaviour
     private Renderer myRenderer;
     private GameManager gm;
     public Player enemy;
-
+    public Text percText;
     //[HideInInspector]
     public float percentage = 0.0f;
 
