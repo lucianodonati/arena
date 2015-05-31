@@ -156,5 +156,6 @@ public class Player : MonoBehaviour
         style.normal.textColor = new Color(1.0f, colorChange, colorChange, 1.0f);
         style.font = (Font)Resources.Load("full Pack 2025", typeof(Font));
         GUI.Label(new Rect(100.0f + ((id-1) * Screen.width/4), Screen.height - 50.0f, 200.0f, 100.0f), ((int)percentage).ToString() + "  %", style);
+
     }
 }
