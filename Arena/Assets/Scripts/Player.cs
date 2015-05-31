@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     public Vector3 m_vStartingPosition;
     private float showDownTimer = 0.0f;
     public float showDownCooldown = 5.0f;
+    public bool shielded = false;
 
     //[HideInInspector]
     public float percentage = 0.0f;
@@ -31,6 +32,8 @@ public class Player : MonoBehaviour
     #region GUI
 
     private Text percText;
+    private Text blinkCD;
+    private Text shieldCD;
 
     #endregion GUI
 
@@ -52,6 +55,9 @@ public class Player : MonoBehaviour
     private void Start()
     {
         percText = GameObject.Find("HealthPercentage" + id).GetComponent<Text>();
+        blinkCD = GameObject.Find("BlinkUI" + id).GetComponent<Text>();
+        shieldCD = GameObject.Find("ShieldUI" + id).GetComponent<Text>();
+
         myRenderer = GetComponent<Renderer>();
         PRB = GetComponent<Rigidbody2D>();
         sounds = GetComponent<SoundPlayer>();
@@ -86,6 +92,7 @@ public class Player : MonoBehaviour
         percText.text = percentage.ToString() + "%";
         percText.color = new Color(1.0f, colorChange, colorChange, 1.0f);
 
+        blinkCD.text = gameObject.GetComponent<PlayerController>().blinkCD.ToString();
         // Timers
         if (onLava)
         {
@@ -134,7 +141,7 @@ public class Player : MonoBehaviour
             showDownTimer = showDownCooldown;
             PRB.velocity = new Vector3(0, 0, 0);
         }
-        else if (collGO.tag == "Projectile" && collGO.GetComponent<Projectile>().owner != this)
+        else if (collGO.tag == "Projectile" && collGO.GetComponent<Projectile>().owner != this && shielded == false)
         {
             // Playsound
 
@@ -147,6 +154,14 @@ public class Player : MonoBehaviour
             takeDamage(10.0f);
 
             Destroy(collGO);
+        }
+        else if (collGO.tag == "Projectile" && collGO.GetComponent<Projectile>().owner != this && shielded == true)
+        {
+            Destroy(collGO);
+            Projectile_Spawner child = transform.GetComponentInChildren<Projectile_Spawner>();
+            child.ShootFireball();
+
+
         }
         else if (collGO.tag == "Platform")
             onLava = false;

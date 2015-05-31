@@ -5,7 +5,7 @@ public class Projectile_Spawner : MonoBehaviour
 {
     private Player daddy;
 
-    public float shootTimer = 0.5f;
+    public float shootTimer = 1.5f;
     public Projectile fireball;
     private float gameTime;
     public Vector2 projectileVelocity;
@@ -57,28 +57,29 @@ public class Projectile_Spawner : MonoBehaviour
                 //Checks to see if the player can fire a projectile
                 if (canFire)
                 {
-                    canFire = !canFire;
-                    Projectile FB = (Projectile)Instantiate(fireball, transform.position, transform.rotation);
-                    //FB.RB.position = this.transform.position;
-                    FB.owner = GameObject.Find("Player " + daddy.id).GetComponent<Player>();
-
-                    {
-                        //print("X " + xAxis);
-                        //print("Y " + yAxis);
-                        //print(angle);
-
-                        Vector2 aimDirection = new Vector2((fbSpeed * xAxis * Time.deltaTime), -(fbSpeed * yAxis * Time.deltaTime));
-
+            
+                    ShootFireball();
                      
-
-
-                        FB.GetComponent<Rigidbody2D>().velocity = aimDirection;
-
-
-                       
-                    }
                 }
             }
         }
+    }
+
+    public void ShootFireball()
+    {
+        float xAxis = Input.GetAxisRaw("RightStickXC" + daddy.id);
+        float yAxis = Input.GetAxisRaw("RightStickYC" + daddy.id);
+
+        canFire = !canFire;
+        Projectile FB = (Projectile)Instantiate(fireball, transform.position, transform.rotation);
+        
+        FB.owner = GameObject.Find("Player " + daddy.id).GetComponent<Player>();
+        
+        Vector2 aimDirection = new Vector2((fbSpeed * xAxis * Time.deltaTime), -(fbSpeed * yAxis * Time.deltaTime));
+
+        FB.GetComponent<Rigidbody2D>().velocity = aimDirection;
+
+
+        
     }
 }
