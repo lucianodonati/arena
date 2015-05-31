@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
             enemy = GameObject.Find("Player 1").GetComponent<Player>();
 
         GameObject.Find("P" + id.ToString() + "_img").GetComponent<Image>().color = myColor;
-        GameObject.Find("PlayerShowdown" + id.ToString()).GetComponent<SpriteRenderer>().color = myColor;
+        //GameObject.Find("PlayerShowdown" + id.ToString()).GetComponent<SpriteRenderer>().color = myColor;
     }
 
     // Update is called once per frame

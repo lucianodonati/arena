@@ -152,7 +152,7 @@ public class GameManager : MonoBehaviour
         {
             showdown1 = p1;
             showdown2 = p2;
-            setState(GameState.Showdown);
+            setState("Showdown");
             Showdown temp = Instantiate(showdownPrefab);
 
             temp.showdownCamera = showdownCamera;
@@ -163,22 +163,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void setState(GameState _state)
-    {
-        if ((int)_state < 2)
-            Application.LoadLevel((int)_state);
-
-        currentState = _state;
-    }
-
     public void setState(string stateString)
     {
         try
         {
             currentState = (GameState)(Enum.Parse(typeof(GameState), stateString, true));
-
-            if ((int)currentState < 2)
-                Application.LoadLevel((int)currentState);
         }
         catch (ArgumentNullException e)
         {
@@ -213,10 +202,5 @@ public class GameManager : MonoBehaviour
         style.fontSize = 52;
         style.normal.textColor = Color.green;
         GUI.Label(new Rect(Screen.width / 2.0f - Screen.width / 6, Screen.height / 2.0f, 200.0f, 100.0f), m_sWinMessege, style);
-    }
-
-    public void StartGame()
-    {
-        setState(GameState.Fighting);
     }
 }
