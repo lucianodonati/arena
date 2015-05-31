@@ -19,9 +19,16 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        string[] meh = Input.GetJoystickNames();
+
         if (GameObject.Find("GameManager").GetComponent<GameManager>().currentState == GameManager.GameState.Showdown)
         {
-            if (Input.GetButtonDown("ShowdownButton" + player.id))
+            print(Input.GetAxisRaw("ShowdownButton"));
+            if (Input.GetAxisRaw("ShowdownButton") == -1 && player.id == 2)
+            {
+                Showdown.GetInstance().ExecuteAttack(player);
+            }
+            if (Input.GetAxisRaw("ShowdownButton") == 1 && player.id == 1)
             {
                 Showdown.GetInstance().ExecuteAttack(player);
             }
