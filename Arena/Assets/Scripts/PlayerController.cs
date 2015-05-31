@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,11 +13,18 @@ public class PlayerController : MonoBehaviour
     public float shieldCD = 7.0f;
     public float shieldTimer = 0.8f;
 
+        private Image Blink;
+    private Image Shield;
+
+
     // Use this for initialization
     private void Start()
     {
         player = GetComponent<Player>();
         PRB = GetComponent<Rigidbody2D>();
+
+        Blink = GameObject.Find("Blinkp" + player.id).GetComponent<Image>();
+        Shield = GameObject.Find("Shieldp" + player.id).GetComponent<Image>();
     }
 
     // Update is called once per frame
@@ -37,8 +45,10 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown("ShieldC" + player.id.ToString()) && shieldCD <= 0)
         {
+            Shield.CrossFadeAlpha(0.0f, 0.0f, true);
             shielded = true;
             shieldCD = 7.0f;
+            Shield.CrossFadeAlpha(1.0f, shieldCD, false);
         }
 
 
@@ -74,6 +84,7 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetAxisRaw("Blink" + player.id) > 0.0f && blinkCD <= 0.0f)
             {
+                Blink.CrossFadeAlpha(0.0f, 0.0f, true);
                 GetComponent<SoundPlayer>().PlaySound("Blink");
                 blinkCD = 5.0f;
 
@@ -87,6 +98,7 @@ public class PlayerController : MonoBehaviour
 
                 PRB.velocity = new Vector2(0, 0);
                 PRB.AddForce(new Vector2(playerVelocityX, -playerVelocityY));
+                Blink.CrossFadeAlpha(1.0f, blinkCD, false);
             }
         }
     }

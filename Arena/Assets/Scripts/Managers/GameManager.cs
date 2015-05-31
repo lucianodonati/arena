@@ -49,7 +49,14 @@ public class GameManager : MonoBehaviour
         {
             Menu mnu = GameObject.Find("MenuHandler").GetComponent<Menu>();
 
+            if(mnu.p1Name==null)
+            player1 = CreatePlayer("Player 1");
+            else
             player1 = CreatePlayer(mnu.p1Name);
+
+            if (mnu.p2Name == null)
+            player2 = CreatePlayer("Player 2");
+            else
             player2 = CreatePlayer(mnu.p2Name);
         }
         else
