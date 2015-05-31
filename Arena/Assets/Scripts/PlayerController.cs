@@ -8,6 +8,9 @@ public class PlayerController : MonoBehaviour
     private Player player;
     public float blinkDist = 11.0f;
     public float blinkCD = 5.0f;
+    public bool shielded = false;
+    public float shieldCD = 7.0f;
+    public float shieldTimer = 0.8f;
 
     // Use this for initialization
     private void Start()
@@ -19,14 +22,32 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        string[] meh = Input.GetJoystickNames();
+     //   string[] meh = Input.GetJoystickNames();
+
+        shieldCD -= Time.deltaTime;
+        if (shielded == true)
+        {
+            shieldTimer -= Time.deltaTime;
+            if (shieldTimer <= 0)
+            {
+                shielded = false;
+                shieldTimer = 0.8f;
+            }
+        }
+
+        if (Input.GetButtonDown("ShieldC" + player.id.ToString()) && shieldCD <= 0)
+        {
+            shielded = true;
+            shieldCD = 7.0f;
+        }
+
 
         if (GameObject.Find("GameManager").GetComponent<GameManager>().currentState == GameManager.GameState.Showdown)
         {
-            if (Input.GetAxisRaw("ShowdownButton") == -1 && player.id == 2)
+            if (Input.GetButtonDown("ShowdownButton" + player.id))
                 Showdown.GetInstance().ExecuteAttack(player);
-            if (Input.GetAxisRaw("ShowdownButton") == 1 && player.id == 1)
-                Showdown.GetInstance().ExecuteAttack(player);
+            //if (Input.GetAxisRaw("ShowdownButton") == 1 && player.id == 1)
+            //    Showdown.GetInstance().ExecuteAttack(player);
         }
         else
         {

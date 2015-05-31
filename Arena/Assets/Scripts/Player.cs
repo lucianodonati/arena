@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     public Vector3 m_vStartingPosition;
     private float showDownTimer = 0.0f;
     public float showDownCooldown = 5.0f;
-    public bool shielded = false;
+   
 
     //[HideInInspector]
     public float percentage = 0.0f;
@@ -140,7 +140,7 @@ public class Player : MonoBehaviour
             showDownTimer = showDownCooldown;
             PRB.velocity = new Vector3(0, 0, 0);
         }
-        else if (collGO.tag == "Projectile" && collGO.GetComponent<Projectile>().owner != this && shielded == false)
+        else if (collGO.tag == "Projectile" && collGO.GetComponent<Projectile>().owner != this && gameObject.GetComponent<PlayerController>().shielded == false)
         {
             // Playsound
 
@@ -154,7 +154,7 @@ public class Player : MonoBehaviour
 
             Destroy(collGO);
         }
-        else if (collGO.tag == "Projectile" && collGO.GetComponent<Projectile>().owner != this && shielded == true)
+        else if (collGO.tag == "Projectile" && collGO.GetComponent<Projectile>().owner != this && gameObject.GetComponent<PlayerController>().shielded == true)
         {
             Destroy(collGO);
             Projectile_Spawner child = transform.GetComponentInChildren<Projectile_Spawner>();
