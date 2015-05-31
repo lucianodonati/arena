@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -21,12 +22,13 @@ public class Player : MonoBehaviour
     [HideInInspector]
     public bool alive = true;
 
-
-    // Hud
-    public GUIStyle style;
-
-
     #endregion PlayerStuff
+
+    #region GUI
+
+    private Text percText;
+
+    #endregion GUI
 
     #region Sounds
 
@@ -45,25 +47,25 @@ public class Player : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
+        percText = GameObject.Find("HealthPercentage" + id).GetComponent<Text>();
         myRenderer = GetComponent<Renderer>();
         PRB = GetComponent<Rigidbody2D>();
         sounds = GetComponent<SoundPlayer>();
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         GetComponent<SpriteRenderer>().color = myColor;
-
-        // initialize gui style 
-        style = new GUIStyle();
-        style.fontSize = 54;
-        style.fontStyle = FontStyle.Italic;
     }
 
     // Update is called once per frame
     private void Update()
     {
         if (gm.m_fWinTimer < 3.0f)
-	{
-        return;
-	} 
+        {
+            return;
+        }
+
+        float colorChange = Mathf.Clamp(1.0f - percentage / 100.0f, 0.0f, 1.0f);
+        percText.text = percentage.ToString() + "%";
+        percText.color = new Color(1.0f, colorChange, colorChange, 1.0f);
 
         // Timers
         if (onLava)
@@ -144,17 +146,6 @@ public class Player : MonoBehaviour
             //DIE
             gm.m_nPlayerCount--;
             Destroy(this.gameObject);
-      
         }
-    }
-
-    void OnGUI()
-    {
-
-        float colorChange = Mathf.Clamp(1.0f - percentage/100.0f,0.0f,1.0f);
-
-        style.normal.textColor = new Color(1.0f, colorChange, colorChange, 1.0f);
-        style.font = (Font)Resources.Load("full Pack 2025", typeof(Font));
-        GUI.Label(new Rect(100.0f + ((id-1) * Screen.width/4), Screen.height - 50.0f, 200.0f, 100.0f), ((int)percentage).ToString() + "  %", style);
     }
 }
