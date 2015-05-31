@@ -198,8 +198,18 @@ public class GameManager : MonoBehaviour
 
     public void WinMessege()
     {
-        GameObject p = GameObject.FindGameObjectWithTag("Player");
-        Player tempPlayer = p.GetComponent<Player>();
+        GameObject[] p = GameObject.FindGameObjectsWithTag("Player");
+        Player tempPlayer1 = p[0].GetComponent<Player>();
+        Player tempPlayer2 = p[1].GetComponent<Player>();
+        Player tempPlayer;
+        if (tempPlayer1.alive == true)
+        {
+            tempPlayer = tempPlayer1;
+        }
+        else
+        {
+            tempPlayer = tempPlayer2;
+        }
         string name = tempPlayer.name;
         m_fWinTimer -= Time.deltaTime;
         m_sWinMessege = name + " WINS";
