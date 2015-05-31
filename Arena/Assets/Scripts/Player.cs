@@ -128,7 +128,7 @@ public class Player : MonoBehaviour
         {
             if (showDownTimer <= 0.0f)
                 // Showdown
-                gm.GoShowdown(this, collGO.GetComponent<Player>());
+                gm.GoShowdown();
             showDownTimer = showDownCooldown;
         }
         else if (collGO.tag == "Projectile" && collGO.GetComponent<Projectile>().owner != this)

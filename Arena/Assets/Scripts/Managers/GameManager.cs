@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public Player playerPrefab;
     public Showdown showdownPrefab;
     public float gameTime = 0.0f;
-    public Player showdown1, showdown2;
+    public Player player1, player2;
 
     public int m_nPlayerCount;
     public float m_fWinTimer;
@@ -45,8 +45,8 @@ public class GameManager : MonoBehaviour
         players = new Dictionary<int, Player>(2);
         DontDestroyOnLoad(this);
 
-        CreatePlayer("Luciano");
-        CreatePlayer("Brian");
+        player1 = CreatePlayer("Luciano");
+        player2 = CreatePlayer("Brian");
 
         m_nPlayerCount = players.Count;
         m_fWinTimer = 3.0f;
@@ -112,9 +112,11 @@ public class GameManager : MonoBehaviour
                 {
                     break;
                 }
+
                 currentState = GameState.Fighting;
                 m_nPlayerCount = players.Count;
-
+                player1.percentage = 0;
+                player2.percentage = 0;
                 break;
 
             default:
@@ -124,7 +126,12 @@ public class GameManager : MonoBehaviour
 
     #region Player
 
-    public void CreatePlayer(string _name)
+    public void EndShowdown()
+    {
+        GetComponent<SoundPlayer>().PlaySound("End");
+    }
+
+    public Player CreatePlayer(string _name)
     {
         Player newPlayer = Instantiate(playerPrefab);
         //playerPrefab = new Player ();
@@ -165,6 +172,8 @@ public class GameManager : MonoBehaviour
         newPlayer.playerName = _name;
         newPlayer.name = "Player " + newPlayer.id;
         players.Add(newPlayer.id, newPlayer);
+
+        return newPlayer;
     }
 
     public void PlayerDied(int _id)
@@ -174,15 +183,12 @@ public class GameManager : MonoBehaviour
 
     #endregion Player
 
-    public void GoShowdown(Player p1, Player p2)
+    public void GoShowdown()
     {
         if (currentState != GameState.Showdown)
         {
-            showdown1 = p1;
-            showdown2 = p2;
-
-            showdown1.SetColor();
-            showdown2.SetColor();
+            player1.SetColor();
+            player2.SetColor();
 
             setState("Showdown");
             Showdown temp = Instantiate(showdownPrefab);
@@ -191,7 +197,7 @@ public class GameManager : MonoBehaviour
             temp.HUD = HUD;
             temp.mainCamera = Camera.main;
 
-            Showdown.GetInstance().InitShowdown(showdown1, showdown2);
+            Showdown.GetInstance().InitShowdown(player1, player2);
         }
     }
 
