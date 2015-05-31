@@ -25,8 +25,7 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
-        players = new Dictionary<int, Player>(Input.GetJoystickNames().Length);
-        Debug.Log(Input.GetJoystickNames().Length + " players detected");
+        players = new Dictionary<int, Player>(2);
         DontDestroyOnLoad(this);
 
         CreatePlayer("Luciano");
@@ -169,7 +168,6 @@ public class GameManager : MonoBehaviour
         GUIStyle style = new GUIStyle();
         style.fontSize = 52;
         style.normal.textColor = Color.green;
-        style.font = (Font)Resources.Load("full Pack 2025", typeof(Font));
         GUI.Label(new Rect(Screen.width / 2.0f - Screen.width / 6, Screen.height / 2.0f, 200.0f, 100.0f), m_sWinMessege, style);
     }
 }

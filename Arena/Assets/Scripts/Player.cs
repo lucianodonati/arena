@@ -47,11 +47,12 @@ public class Player : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
-        percText = GameObject.Find("HealthPercentage" + id).GetComponent<Text>();
+        Debug.Log("SAME IS GREAT");
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        percText = GameObject.Find("HealthPercentage" + id.ToString()).GetComponent<Text>();
         myRenderer = GetComponent<Renderer>();
         PRB = GetComponent<Rigidbody2D>();
         sounds = GetComponent<SoundPlayer>();
-        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         GetComponent<SpriteRenderer>().color = myColor;
     }
 
@@ -89,6 +90,17 @@ public class Player : MonoBehaviour
     public void takeDamage(float _dam)
     {
         percentage += _dam;
+    }
+
+    public void pushBack(Vector2 pushTo)
+    {
+        Vector2 force = new Vector2(-pushTo.x, -pushTo.y);
+
+        force *= 5000.0f;
+
+        PRB.AddForce(force);
+
+        takeDamage(50.0f);
     }
 
     private void OnTriggerStay2D(Collider2D collision)

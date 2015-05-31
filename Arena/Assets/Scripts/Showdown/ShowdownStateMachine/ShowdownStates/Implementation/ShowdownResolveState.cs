@@ -11,12 +11,12 @@
     {
         this.StateType = ShowdownState.ShowdownStateType.ShowdownResolveState;
         if (transitionOnly == false)
-        {            
+        {
             OnEnter();
         }
     }
 
-    #endregion
+    #endregion Constructor
 
     #region Public Methods
 
@@ -27,7 +27,7 @@
     {
         base.OnEnter();
     }
-    
+
     /// <summary>
     /// Occurs when this state is exited to another state.
     /// </summary>
@@ -45,21 +45,19 @@
         RunResolveTimer();
     }
 
-    #endregion
+    #endregion Public Methods
 
     private void RunResolveTimer()
     {
         resolveTimer += UnityEngine.Time.deltaTime;
 
-        if(resolveTimer > 0.25)
+        if (resolveTimer > 0.25)
         {
             Showdown.GetInstance().IsAcceptingAttacks = false;
             Showdown.GetInstance().DisplayWinner(Showdown.GetInstance().ProcessAttacks());
-            
-            Showdown.GetInstance().StateMachine.TransitionToState( ShowdownStateType.ShowdownInitState);
-            //GameManager.GetInstance().ShowdownResult( Showdown.GetInstance().ProcessAttacks() );
+
+            Showdown.GetInstance().StateMachine.TransitionToState(ShowdownStateType.ShowdownInitState);
             //Destroy( Showdown.GetInstance() );
-            
         }
     }
 }

@@ -27,10 +27,8 @@ public class Projectile_Spawner : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (GameObject.Find("GameManager").GetComponent<GameManager>().currentState != GameManager.GameState.Showdown) ;
+        if (GameObject.Find("GameManager").GetComponent<GameManager>().currentState != GameManager.GameState.Showdown)
         {
-
-
             if (!canFire)
             {
                 gameTime += Time.deltaTime;
