@@ -17,7 +17,6 @@ public class Player : MonoBehaviour
     public Vector3 m_vStartingPosition;
     private float showDownTimer = 0.0f;
     public float showDownCooldown = 5.0f;
-   
 
     //[HideInInspector]
     public float percentage = 0.0f;
@@ -121,7 +120,7 @@ public class Player : MonoBehaviour
     {
         Vector2 force = new Vector2(-pushTo.x, -pushTo.y);
 
-        force *= 5000.0f;
+        force *= 5000.0f + percentage * 75.0f;
 
         PRB.AddForce(force);
 
@@ -159,8 +158,6 @@ public class Player : MonoBehaviour
             Destroy(collGO);
             Projectile_Spawner child = transform.GetComponentInChildren<Projectile_Spawner>();
             child.ShootFireball();
-
-
         }
         else if (collGO.tag == "Platform")
             onLava = false;
