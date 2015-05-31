@@ -2,18 +2,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     private Dictionary<int, Player> players;
     public Player playerPrefab;
+    public Showdown showdownPrefab;
     public float gameTime = 0.0f;
-    public Showdown showdown;
     public Player showdown1, showdown2;
     public int rounds = 1;
     public int m_nPlayerCount;
     public float m_fWinTimer;
     public string m_sWinMessege;
+
+    public Camera mainCamera, showdownCamera;
+    public GameObject HUD;
 
     public enum GameState
     {
@@ -25,6 +29,10 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
+        showdownCamera = GameObject.Find("ShowdownCamera").GetComponent<Camera>();
+        showdownCamera.enabled = false;
+        HUD = GameObject.Find("HUD");
+
         players = new Dictionary<int, Player>(2);
         DontDestroyOnLoad(this);
 
@@ -127,6 +135,12 @@ public class GameManager : MonoBehaviour
             showdown1 = p1;
             showdown2 = p2;
             setState(GameState.Showdown);
+            Showdown temp = Instantiate(showdownPrefab);
+
+            temp.showdownCamera = showdownCamera;
+            temp.HUD = HUD;
+            temp.mainCamera = Camera.main;
+
             Showdown.GetInstance().InitShowdown(showdown1, showdown2);
         }
     }

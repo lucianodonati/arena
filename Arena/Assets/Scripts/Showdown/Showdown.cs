@@ -45,8 +45,8 @@ public class Showdown : MonoBehaviour
     [SerializeField]
     private GameObject showdownCanvas = null;
 
-    private Camera mainCamera, showdownCamera;
-    private GameObject HUD;
+    public Camera mainCamera, showdownCamera;
+    public GameObject HUD;
 
     [SerializeField]
     private float suspenseLowerLimit = 1.0f;
@@ -120,19 +120,14 @@ public class Showdown : MonoBehaviour
     /// </summary>
     private Dictionary<string, ShowdownAttack> attackMap = new Dictionary<string, ShowdownAttack>();
 
-    private Player player1 = new Player();
+    private Player player1;
 
-    private Player player2 = new Player();
+    private Player player2;
 
     // Use this for initialization
 
     private void Start()
     {
-        winnerName = GameObject.Find("WinnerName").GetComponent<Text>();
-        mainCamera = Camera.main;
-        showdownCamera = GameObject.Find("ShowdownCamera").GetComponent<Camera>();
-        showdownCamera.enabled = false;
-        HUD = GameObject.Find("HUD");
     }
 
     /// <summary>
@@ -186,6 +181,8 @@ public class Showdown : MonoBehaviour
             player2.pushBack(/*player1.GetComponent<Rigidbody2D>().velocity*/ new Vector2(1, 1));
         else
             player1.pushBack(/*player2.GetComponent<Rigidbody2D>().velocity*/ new Vector2(1, 1));
+
+        Destroy(gameObject);
     }
 
     public void Fight()
