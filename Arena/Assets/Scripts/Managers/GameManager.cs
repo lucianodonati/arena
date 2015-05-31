@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     public Showdown showdownPrefab;
     public float gameTime = 0.0f;
     public Player showdown1, showdown2;
-    public int rounds = 1;
 
     public int m_nPlayerCount;
     public float m_fWinTimer;
@@ -19,11 +18,13 @@ public class GameManager : MonoBehaviour
     public int m_nRounds;
     public int[] m_nScores;
 
+    private float roundTimer = 10.0f;
+
     public Camera mainCamera, showdownCamera;
     public GameObject HUD;
 
     private Texture2D tex, tex2;
-    private Rect playRect, creditRect, exitRect;
+    private Rect playRect = new Rect(), creditRect = new Rect(), exitRect = new Rect();
     private Ray ray;
     private RaycastHit hit;
 
@@ -62,7 +63,7 @@ public class GameManager : MonoBehaviour
         {
             if (currentState != GameState.Win)
             {
-            currentState = GameState.RoundEnd;
+                currentState = GameState.RoundEnd;
             }
         }
 
@@ -97,17 +98,23 @@ public class GameManager : MonoBehaviour
                     m_fWinTimer = 3.0f;
                     currentState = GameState.Fighting;
                     m_nPlayerCount = players.Count;
-                    Application.LoadLevel(Application.loadedLevel);
+                    if (EndRound())
+                        Application.LoadLevel(0);
+                    else
+                        Application.LoadLevel(Application.loadedLevel);
                     Destroy(this.gameObject);
                 }
                 break;
+
             case GameState.RoundEnd:
+
                 if (EndRound())
                 {
                     break;
                 }
                 currentState = GameState.Fighting;
                 m_nPlayerCount = players.Count;
+
                 break;
 
             default:
@@ -173,6 +180,10 @@ public class GameManager : MonoBehaviour
         {
             showdown1 = p1;
             showdown2 = p2;
+
+            showdown1.SetColor();
+            showdown2.SetColor();
+
             setState("Showdown");
             Showdown temp = Instantiate(showdownPrefab);
 
@@ -198,8 +209,18 @@ public class GameManager : MonoBehaviour
 
     public void WinMessege()
     {
-        GameObject p = GameObject.FindGameObjectWithTag("Player");
-        Player tempPlayer = p.GetComponent<Player>();
+        GameObject[] p = GameObject.FindGameObjectsWithTag("Player");
+        Player tempPlayer1 = p[0].GetComponent<Player>();
+        Player tempPlayer2 = p[1].GetComponent<Player>();
+        Player tempPlayer;
+        if (tempPlayer1.alive == true)
+        {
+            tempPlayer = tempPlayer1;
+        }
+        else
+        {
+            tempPlayer = tempPlayer2;
+        }
         string name = tempPlayer.name;
         m_fWinTimer -= Time.deltaTime;
         m_sWinMessege = name + " WINS";
@@ -239,8 +260,6 @@ public class GameManager : MonoBehaviour
 
     private void OnGUI()
     {
-        GUIStyle gStyle = new GUIStyle();
-
         tex = (Texture2D)Resources.Load("button");
         tex2 = (Texture2D)Resources.Load("buttonActive");
 

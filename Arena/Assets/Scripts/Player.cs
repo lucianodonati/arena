@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     private GameManager gm;
     public Player enemy;
     public Vector3 m_vStartingPosition;
+    private float showDownTimer = 0.0f;
+    public float showDownCooldown = 5.0f;
 
     //[HideInInspector]
     public float percentage = 0.0f;
@@ -29,6 +31,7 @@ public class Player : MonoBehaviour
     #region GUI
 
     private Text percText;
+
     #endregion GUI
 
     #region Sounds
@@ -60,7 +63,12 @@ public class Player : MonoBehaviour
             enemy = GameObject.Find("Player 1").GetComponent<Player>();
 
         GameObject.Find("P" + id.ToString() + "_img").GetComponent<Image>().color = myColor;
-        //GameObject.Find("PlayerShowdown" + id.ToString()).GetComponent<SpriteRenderer>().color = myColor;
+    }
+
+    public void SetColor()
+    {
+        string obj = "PlayerShowdown" + id.ToString();
+        GameObject.Find(obj).SendMessage("SetColor", myColor);
     }
 
     // Update is called once per frame
@@ -70,6 +78,9 @@ public class Player : MonoBehaviour
         {
             return;
         }
+
+        if (showDownTimer > 0.0f)
+            showDownTimer -= Time.deltaTime;
 
         float colorChange = Mathf.Clamp(1.0f - percentage / 100.0f, 0.0f, 1.0f);
         percText.text = percentage.ToString() + "%";
@@ -111,15 +122,16 @@ public class Player : MonoBehaviour
     }
 
 
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject collGO = collision.gameObject;
 
         if (collGO.tag == "Player")
         {
-            // Showdown
-            gm.GoShowdown(this, collGO.GetComponent<Player>());
+            if (showDownTimer <= 0.0f)
+                // Showdown
+                gm.GoShowdown(this, collGO.GetComponent<Player>());
+            showDownTimer = showDownCooldown;
             PRB.velocity = new Vector3(0, 0, 0);
         }
         else if (collGO.tag == "Projectile" && collGO.GetComponent<Projectile>().owner != this)

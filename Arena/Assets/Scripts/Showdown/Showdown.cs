@@ -48,11 +48,11 @@ public class Showdown : MonoBehaviour
     public Camera mainCamera, showdownCamera;
     public GameObject HUD;
 
-    [SerializeField]
-    private float suspenseLowerLimit = 1.0f;
+    //[SerializeField]
+    //private float suspenseLowerLimit = 1.0f;
 
-    [SerializeField]
-    private float suspenseUpperLimit = 10.0f;
+    //[SerializeField]
+    //private float suspenseUpperLimit = 10.0f;
 
     [SerializeField]
     private Image fightUIElement = null;
@@ -124,10 +124,13 @@ public class Showdown : MonoBehaviour
 
     private Player player2;
 
+    public SoundPlayer sounds;
+
     // Use this for initialization
 
     private void Start()
     {
+        sounds.PlaySound("Start");
     }
 
     /// <summary>
@@ -183,6 +186,7 @@ public class Showdown : MonoBehaviour
             player1.pushBack(/*player2.GetComponent<Rigidbody2D>().velocity*/ new Vector2(1, 1));
 
         GameObject.Find("GameManager").GetComponent<GameManager>().setState("Fighting");
+        sounds.PlaySound("End");
         Destroy(gameObject);
     }
 

@@ -23,7 +23,6 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetButtonDown("ShowdownButton" + player.id))
             {
-                Debug.Log(name + " Pressed the showdown button");
                 Showdown.GetInstance().ExecuteAttack(player);
             }
         }
@@ -52,6 +51,7 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetAxisRaw("Blink" + player.id) > 0.0f && blinkCD <= 0.0f)
             {
+                GetComponent<SoundPlayer>().PlaySound("Blink");
                 blinkCD = 5.0f;
 
                 Vector3 newPos = new Vector3((blinkDist * xAxis), -(blinkDist * yAxis));
