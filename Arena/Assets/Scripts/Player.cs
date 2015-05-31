@@ -6,7 +6,6 @@ public class Player : MonoBehaviour
     // If you need to see a variable, comment out the [HideInInspector] and when you're done debugging put it back =)
 
     #region PlayerStuff
-
     public int id;
     public Color myColor;
     public string playerName;
