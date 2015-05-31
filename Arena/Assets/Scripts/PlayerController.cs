@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float playerSpeed = 10000.0f;
+    public float playerSpeed = 12000.0f;
     private Rigidbody2D PRB;
     private Player player;
     public float blinkDist = 11.0f;
@@ -61,8 +61,8 @@ public class PlayerController : MonoBehaviour
 
                 player.transform.position = newNewPos;
 
-                playerVelocityX = playerSpeed * xAxis * Time.deltaTime * 30;
-                playerVelocityY = playerSpeed * yAxis * Time.deltaTime * 30;
+                playerVelocityX = playerSpeed * xAxis * Time.deltaTime * 10;
+                playerVelocityY = playerSpeed * yAxis * Time.deltaTime * 10;
 
                 PRB.velocity = new Vector2(0, 0);
                 PRB.AddForce(new Vector2(playerVelocityX, -playerVelocityY));
