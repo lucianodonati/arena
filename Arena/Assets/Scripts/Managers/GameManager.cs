@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     public Showdown showdownPrefab;
     public float gameTime = 0.0f;
     public Player showdown1, showdown2;
-    public int rounds = 1;
 
     public int m_nPlayerCount;
     public float m_fWinTimer;
@@ -62,7 +61,7 @@ public class GameManager : MonoBehaviour
         {
             if (currentState != GameState.Win)
             {
-            currentState = GameState.RoundEnd;
+                currentState = GameState.RoundEnd;
             }
         }
 
@@ -101,6 +100,7 @@ public class GameManager : MonoBehaviour
                     Destroy(this.gameObject);
                 }
                 break;
+
             case GameState.RoundEnd:
                 if (EndRound())
                 {
