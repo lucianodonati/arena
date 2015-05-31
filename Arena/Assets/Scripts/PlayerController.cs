@@ -22,7 +22,10 @@ public class PlayerController : MonoBehaviour
         if (GameObject.Find("GameManager").GetComponent<GameManager>().currentState == GameManager.GameState.Showdown)
         {
             if (Input.GetButtonDown("ShowdownButton" + player.id))
+            {
+                Debug.Log(name + " Pressed the showdown button");
                 Showdown.GetInstance().ExecuteAttack(player);
+            }
         }
         else
         {
