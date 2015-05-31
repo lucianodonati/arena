@@ -8,14 +8,12 @@ public class Player : MonoBehaviour
 
     #region PlayerStuff
 
-    public int enemyID;
     public int id;
     public Color myColor;
     public string playerName;
     private Renderer myRenderer;
     private GameManager gm;
     public Player enemy;
-    private Text percText;
 
     //[HideInInspector]
     public float percentage = 0.0f;
@@ -25,10 +23,13 @@ public class Player : MonoBehaviour
     [HideInInspector]
     public bool alive = true;
 
-    // Hud
-    public GUIStyle style;
-
     #endregion PlayerStuff
+
+    #region GUI
+
+    private Text percText;
+
+    #endregion GUI
 
     #region Sounds
 
@@ -47,29 +48,16 @@ public class Player : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
-        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-        percText = GameObject.Find("HealthPercentage" + id.ToString()).GetComponent<Text>();
-
-        if (id == 1)
-        {
-            enemy = GameObject.Find("Player 2").GetComponent<Player>();
-            enemyID = 2;
-        }
-        else if (id == 2)
-        {
-            enemy = GameObject.Find("Player 1").GetComponent<Player>();
-            enemyID = 1;
-        }
-
+        percText = GameObject.Find("HealthPercentage" + id).GetComponent<Text>();
         myRenderer = GetComponent<Renderer>();
         PRB = GetComponent<Rigidbody2D>();
         sounds = GetComponent<SoundPlayer>();
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         GetComponent<SpriteRenderer>().color = myColor;
-
-        // initialize gui style
-        style = new GUIStyle();
-        style.fontSize = 54;
-        style.fontStyle = FontStyle.Italic;
+        if (id == 1)
+            enemy = GameObject.Find("Player 2").GetComponent<Player>();
+        else
+            enemy = GameObject.Find("Player 1").GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -79,6 +67,10 @@ public class Player : MonoBehaviour
         {
             return;
         }
+
+        float colorChange = Mathf.Clamp(1.0f - percentage / 100.0f, 0.0f, 1.0f);
+        percText.text = percentage.ToString() + "%";
+        percText.color = new Color(1.0f, colorChange, colorChange, 1.0f);
 
         // Timers
         if (onLava)
@@ -171,14 +163,5 @@ public class Player : MonoBehaviour
             gm.m_nPlayerCount--;
             Destroy(this.gameObject);
         }
-    }
-
-    private void OnGUI()
-    {
-        float colorChange = Mathf.Clamp(1.0f - percentage / 100.0f, 0.0f, 1.0f);
-
-        style.normal.textColor = new Color(1.0f, colorChange, colorChange, 1.0f);
-        style.font = (Font)Resources.Load("full Pack 2025", typeof(Font));
-        GUI.Label(new Rect(100.0f + ((id - 1) * Screen.width / 4), Screen.height - 50.0f, 200.0f, 100.0f), ((int)percentage).ToString() + "  %", style);
     }
 }

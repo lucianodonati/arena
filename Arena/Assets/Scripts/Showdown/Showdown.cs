@@ -128,6 +128,7 @@ public class Showdown : MonoBehaviour
 
     private void Start()
     {
+        winnerName = GameObject.Find("WinnerName").GetComponent<Text>();
         mainCamera = Camera.main;
         showdownCamera = GameObject.Find("ShowdownCamera").GetComponent<Camera>();
         showdownCamera.enabled = false;
@@ -182,9 +183,9 @@ public class Showdown : MonoBehaviour
     {
         this.winnerName.text = player.playerName;
         if (player == player1)
-            player2.pushBack(player1.GetComponent<Rigidbody2D>().velocity);
+            player2.pushBack(/*player1.GetComponent<Rigidbody2D>().velocity*/ new Vector2(1, 1));
         else
-            player1.pushBack(player2.GetComponent<Rigidbody2D>().velocity);
+            player1.pushBack(/*player2.GetComponent<Rigidbody2D>().velocity*/ new Vector2(1, 1));
     }
 
     public void Fight()
