@@ -32,8 +32,8 @@ public class Player : MonoBehaviour
     #region GUI
 
     private Text percText;
-    private Text blinkCD;
-    private Text shieldCD;
+    //private Text blinkCD;
+    //private Text shieldCD;
 
     #endregion GUI
 
@@ -55,8 +55,8 @@ public class Player : MonoBehaviour
     private void Start()
     {
         percText = GameObject.Find("HealthPercentage" + id).GetComponent<Text>();
-        blinkCD = GameObject.Find("BlinkUI" + id).GetComponent<Text>();
-        shieldCD = GameObject.Find("ShieldUI" + id).GetComponent<Text>();
+        //blinkCD = GameObject.Find("BlinkUI" + id).GetComponent<Text>();
+        //shieldCD = GameObject.Find("ShieldUI" + id).GetComponent<Text>();
 
         myRenderer = GetComponent<Renderer>();
         PRB = GetComponent<Rigidbody2D>();
@@ -92,7 +92,7 @@ public class Player : MonoBehaviour
         percText.text = percentage.ToString() + "%";
         percText.color = new Color(1.0f, colorChange, colorChange, 1.0f);
 
-        blinkCD.text = gameObject.GetComponent<PlayerController>().blinkCD.ToString();
+        //blinkCD.text = gameObject.GetComponent<PlayerController>().blinkCD.ToString();
         // Timers
         if (onLava && GameObject.Find("GameManager").GetComponent<GameManager>().currentState != GameManager.GameState.Showdown)
         {
