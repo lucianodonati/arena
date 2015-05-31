@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public int m_nPlayerCount;
     public float m_fWinTimer;
     public string m_sWinMessege;
+    public int m_nRounds;
+    public int[] m_nScores;
 
     public Camera mainCamera, showdownCamera;
     public GameObject HUD;
@@ -27,7 +29,7 @@ public class GameManager : MonoBehaviour
 
     public enum GameState
     {
-        MainMenu, Fighting, Showdown, Win
+        MainMenu, Fighting, Showdown, Win, RoundEnd
     }
 
     public GameState currentState = GameState.MainMenu;
@@ -47,13 +49,22 @@ public class GameManager : MonoBehaviour
 
         m_nPlayerCount = players.Count;
         m_fWinTimer = 3.0f;
+        m_nRounds = 3;
+        m_nScores = new int[2];
+        m_nScores[0] = 0;
+        m_nScores[1] = 0;
     }
 
     // Update is called once per frame
     private void Update()
     {
         if (m_nPlayerCount <= 1)
-            currentState = GameState.Win;
+        {
+            if (currentState != GameState.Win)
+            {
+            currentState = GameState.RoundEnd;
+            }
+        }
 
         // if (players.Count == 1)
         //   currentState = GameState.Win;
@@ -89,6 +100,14 @@ public class GameManager : MonoBehaviour
                     Application.LoadLevel(Application.loadedLevel);
                     Destroy(this.gameObject);
                 }
+                break;
+            case GameState.RoundEnd:
+                if (EndRound())
+                {
+                    break;
+                }
+                currentState = GameState.Fighting;
+                m_nPlayerCount = players.Count;
                 break;
 
             default:
@@ -132,6 +151,8 @@ public class GameManager : MonoBehaviour
                 newPlayer.myColor = Color.magenta;
                 break;
         }
+
+        newPlayer.m_vStartingPosition = startingPos;
         newPlayer.transform.position = startingPos;
 
         newPlayer.playerName = _name;
@@ -184,6 +205,38 @@ public class GameManager : MonoBehaviour
         m_sWinMessege = name + " WINS";
     }
 
+    public bool EndRound()
+    {
+        GameObject[] p = GameObject.FindGameObjectsWithTag("Player");
+        Player tempPlayer1 = p[0].GetComponent<Player>();
+        Player tempPlayer2 = p[1].GetComponent<Player>();
+        Player tempPlayer;
+        if (tempPlayer1.alive == true)
+        {
+            tempPlayer = tempPlayer1;
+        }
+        else
+        {
+            tempPlayer = tempPlayer2;
+        }
+
+        m_nScores[tempPlayer.id - 1]++;
+
+        if (m_nScores[tempPlayer.id - 1] >= m_nRounds / 2 + 1)
+        {
+            currentState = GameState.Win;
+            return true;
+        }
+
+        tempPlayer1.alive = true;
+        tempPlayer2.alive = true;
+
+        tempPlayer1.transform.position = tempPlayer1.m_vStartingPosition;
+        tempPlayer2.transform.position = tempPlayer2.m_vStartingPosition;
+        m_nPlayerCount++;
+        return false;
+    }
+
     private void OnGUI()
     {
         GUIStyle gStyle = new GUIStyle();
@@ -195,6 +248,7 @@ public class GameManager : MonoBehaviour
         GUI.Button(playRect, new GUIContent(tex));
         GUI.Button(creditRect, new GUIContent(tex));
         GUI.Button(exitRect, new GUIContent(tex));
+
         //if (myRect.Contains(Input.mousePosition)) {
         //	GUI.Button (myRect, new GUIContent(tex2));
         //}
