@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public float gameTime = 0.0f;
     public Showdown showdown;
     public Player showdown1, showdown2;
+    public int rounds = 1;
 
     public enum GameState
     {

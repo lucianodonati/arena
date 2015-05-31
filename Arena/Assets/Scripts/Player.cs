@@ -125,5 +125,9 @@ public class Player : MonoBehaviour
             lavaDamage = theLava.damage;
             onLava = true;
         }
+        else if (collGO.tag == "Lava")
+        {
+            // DIE
+        }
     }
 }
