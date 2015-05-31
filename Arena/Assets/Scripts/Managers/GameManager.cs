@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     public Showdown showdown;
     public Player showdown1, showdown2;
     public int rounds = 1;
+    public int m_nPlayerCount;
+    public float m_fWinTimer;
+    public string m_sWinMessege;
 
     public enum GameState
     {
@@ -28,12 +31,15 @@ public class GameManager : MonoBehaviour
 
         CreatePlayer("Luciano");
         CreatePlayer("Brian");
+
+        m_nPlayerCount = players.Count;
+        m_fWinTimer = 3.0f;
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (players.Count == 1)
+        if (m_nPlayerCount <= 1)
             currentState = GameState.Win;
 
         switch (currentState)
@@ -51,6 +57,17 @@ public class GameManager : MonoBehaviour
                 break;
 
             case GameState.Win:
+
+                WinMessege();
+                if (m_fWinTimer <= 0.0f)
+                {
+                    m_sWinMessege = "";
+                    m_fWinTimer = 3.0f;
+                    currentState = GameState.Fighting;
+                    m_nPlayerCount = players.Count;
+                    Application.LoadLevel(Application.loadedLevel);
+                    Destroy(this.gameObject); 
+                }
                 break;
 
             default:
@@ -136,5 +153,25 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogError(e.Message);
         }
+    }
+
+    public void WinMessege()
+    {
+        GameObject p = GameObject.FindGameObjectWithTag("Player");
+        Player tempPlayer = p.GetComponent<Player>();
+        string name = tempPlayer.name;
+        m_fWinTimer -= Time.deltaTime;
+        m_sWinMessege = name + " WINS";
+    }
+
+    void OnGUI()
+    {
+
+        GUIStyle style = new GUIStyle();
+        style.fontSize = 52;
+        style.normal.textColor = Color.green;
+        style.font = (Font)Resources.Load("full Pack 2025", typeof(Font));
+        GUI.Label(new Rect(Screen.width/2.0f - Screen.width/6 ,Screen.height/2.0f, 200.0f, 100.0f),m_sWinMessege,style);
+
     }
 }
