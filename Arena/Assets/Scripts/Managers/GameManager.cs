@@ -166,7 +166,7 @@ public class GameManager : MonoBehaviour
             case 2:
                 startingPos.x = -15.6f;
                 startingPos.y = -16.8f;
-                newPlayer.myColor = Color.green;
+                newPlayer.myColor = Color.blue;
                 break;
 
             case 3:
