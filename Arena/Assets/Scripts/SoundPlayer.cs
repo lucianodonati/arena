@@ -24,7 +24,7 @@ public class SoundPlayer : MonoBehaviour
     public void PlaySound(string _sound)
     {
         AudioClip theClip = getRandomClip(_sound);
-        if (theClip != null)
+        if (audioSource != null)
         {
             audioSource.clip = theClip;
             if (audioSource.clip == null)

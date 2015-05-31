@@ -117,16 +117,18 @@ public class Player : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         GameObject collGO = collision.gameObject;
-        if (collGO.tag == "Player")
-        {
-            // Showdown
-            gm.GoShowdown(this, collGO.GetComponent<Player>());
-        }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject collGO = collision.gameObject;
+
+        if (collGO.tag == "Player")
+        {
+            // Showdown
+            gm.GoShowdown(this, collGO.GetComponent<Player>());
+        }
 
         if (collGO.tag == "Projectile" && collGO.GetComponent<Projectile>().owner != this)
         {

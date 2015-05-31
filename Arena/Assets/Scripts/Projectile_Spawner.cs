@@ -7,7 +7,6 @@ public class Projectile_Spawner : MonoBehaviour
 
     public float shootTimer = 0.5f;
     public Projectile fireball;
-    public AudioClip launchSound;
     private float gameTime;
     public Vector2 projectileVelocity;
     private bool canFire;
@@ -64,9 +63,9 @@ public class Projectile_Spawner : MonoBehaviour
                     FB.owner = GameObject.Find("Player " + daddy.id).GetComponent<Player>();
 
                     {
-                        print("X " + xAxis);
-                        print("Y " + yAxis);
-                        print(angle);
+                        //print("X " + xAxis);
+                        //print("Y " + yAxis);
+                        //print(angle);
 
                         Vector2 aimDirection = new Vector2((fbSpeed * xAxis * Time.deltaTime), -(fbSpeed * yAxis * Time.deltaTime));
 
