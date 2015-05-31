@@ -185,9 +185,9 @@ public class Showdown : MonoBehaviour
     {
         this.winnerName.text = player.playerName;
         if (player == player1)
-            player2.pushBack(/*player1.GetComponent<Rigidbody2D>().velocity*/ new Vector2(1, 1));
+            player2.pushBack(player1.transform.position - player2.transform.position);
         else
-            player1.pushBack(/*player2.GetComponent<Rigidbody2D>().velocity*/ new Vector2(1, 1));
+            player1.pushBack(player2.transform.position - player1.transform.position);
 
         GameManager gm = GameObject.Find("GameManager").GetComponent<GameManager>();
 
