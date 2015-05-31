@@ -185,8 +185,11 @@ public class Showdown : MonoBehaviour
         else
             player1.pushBack(/*player2.GetComponent<Rigidbody2D>().velocity*/ new Vector2(1, 1));
 
-        GameObject.Find("GameManager").GetComponent<GameManager>().setState("Fighting");
-        sounds.PlaySound("End");
+        GameManager gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        gm.setState("Fighting");
+        gm.EndShowdown();
+
         Destroy(gameObject);
     }
 

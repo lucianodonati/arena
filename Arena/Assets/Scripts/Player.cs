@@ -130,7 +130,7 @@ public class Player : MonoBehaviour
         {
             if (showDownTimer <= 0.0f)
                 // Showdown
-                gm.GoShowdown(this, collGO.GetComponent<Player>());
+                gm.GoShowdown();
             showDownTimer = showDownCooldown;
             PRB.velocity = new Vector3(0, 0, 0);
         }
