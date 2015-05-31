@@ -22,10 +22,10 @@ public class GameManager : MonoBehaviour
     public Camera mainCamera, showdownCamera;
     public GameObject HUD;
 
-    Texture2D tex, tex2;
-    Rect playRect, creditRect, exitRect;
-    Ray ray;
-    RaycastHit hit;
+    private Texture2D tex, tex2;
+    private Rect playRect, creditRect, exitRect;
+    private Ray ray;
+    private RaycastHit hit;
 
     public enum GameState
     {
@@ -44,7 +44,6 @@ public class GameManager : MonoBehaviour
         players = new Dictionary<int, Player>(2);
         DontDestroyOnLoad(this);
 
-
         CreatePlayer("Luciano");
         CreatePlayer("Brian");
 
@@ -59,7 +58,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-
         if (m_nPlayerCount <= 1)
         {
             if (currentState != GameState.Win)
@@ -70,7 +68,6 @@ public class GameManager : MonoBehaviour
 
         // if (players.Count == 1)
         //   currentState = GameState.Win;
-
 
         switch (currentState)
         {
@@ -132,12 +129,12 @@ public class GameManager : MonoBehaviour
         Vector3 startingPos = new Vector3(15.6f, 16.8f, -7.0f);
         switch (newPlayer.id % 4)
         {
-            case 0:
+            case 1:
                 startingPos.x = -15.6f;
                 newPlayer.myColor = Color.red;
                 break;
 
-            case 1:
+            case 0:
                 startingPos.x = 15.6f;
                 newPlayer.myColor = Color.blue;
                 break;
@@ -176,7 +173,7 @@ public class GameManager : MonoBehaviour
         {
             showdown1 = p1;
             showdown2 = p2;
-            setState(GameState.Showdown);
+            setState("Showdown");
             Showdown temp = Instantiate(showdownPrefab);
 
             temp.showdownCamera = showdownCamera;
@@ -187,29 +184,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void setState(GameState _state)
-    {
-        if ((int)_state < 2)
-            Application.LoadLevel((int)_state);
-
-        currentState = _state;
-    }
-
     public void setState(string stateString)
     {
         try
         {
             currentState = (GameState)(Enum.Parse(typeof(GameState), stateString, true));
-
-            if ((int)currentState < 2)
-                Application.LoadLevel((int)currentState);
         }
         catch (ArgumentNullException e)
         {
             Debug.LogError(e.Message);
         }
     }
-
 
     public void WinMessege()
     {
@@ -272,9 +257,4 @@ public class GameManager : MonoBehaviour
         style.normal.textColor = Color.green;
         GUI.Label(new Rect(Screen.width / 2.0f - Screen.width / 6, Screen.height / 2.0f, 200.0f, 100.0f), m_sWinMessege, style);
     }
-    public void StartGame()
-    {
-        setState(GameState.Fighting);
-    }
-
 }

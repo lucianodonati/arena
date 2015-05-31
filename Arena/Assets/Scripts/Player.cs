@@ -60,6 +60,7 @@ public class Player : MonoBehaviour
             enemy = GameObject.Find("Player 1").GetComponent<Player>();
 
         GameObject.Find("P" + id.ToString() + "_img").GetComponent<Image>().color = myColor;
+        //GameObject.Find("PlayerShowdown" + id.ToString()).GetComponent<SpriteRenderer>().color = myColor;
     }
 
     // Update is called once per frame
@@ -114,7 +115,7 @@ public class Player : MonoBehaviour
         GameObject collGO = collision.gameObject;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject collGO = collision.gameObject;
         if (collGO.tag == "Player")
@@ -122,13 +123,7 @@ public class Player : MonoBehaviour
             // Showdown
             gm.GoShowdown(this, collGO.GetComponent<Player>());
         }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        GameObject collGO = collision.gameObject;
-
-        if (collGO.tag == "Projectile" && collGO.GetComponent<Projectile>().owner != this)
+        else if (collGO.tag == "Projectile" && collGO.GetComponent<Projectile>().owner != this)
         {
             // Playsound
 

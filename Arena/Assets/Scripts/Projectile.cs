@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public float killTimer = 10;
+    public float killTimer = 5;
     private Vector3 vel = new Vector3(1, 1, 1);
     private Vector3 pos = new Vector3(0, 0, 0);
     public Player owner;
@@ -25,6 +25,8 @@ public class Projectile : MonoBehaviour
         Vector2 newDirection = Vector2.Lerp(GetComponent<Rigidbody2D>().velocity.normalized, toTarget.normalized, Time.deltaTime * 1.7f);
         GetComponent<Rigidbody2D>().velocity = newDirection * 100;
 
+        if (!GetComponent<Renderer>().isVisible)
+            Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D hit)
