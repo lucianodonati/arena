@@ -6,7 +6,9 @@ Explosion.
 A powerful effect which uses sub emitters to leave streaks of smoke arcing out from the central effect. Also makes use of a script which applies physics force to objects within a radius.
 
 FireComplex
-Uses a combination of many particles, including spritesheet animation, sparks and smoke. This effect also has a Light GameObject, whose position is animated by a script so that the lighting in the scene appears to flicker around as the effect plays.
+Uses a combination of many particles, including sprite
+
+ animation, sparks and smoke. This effect also has a Light GameObject, whose position is animated by a script so that the lighting in the scene appears to flicker around as the effect plays.
 
 FireMobile
 Designed for fast performance on mobile, this effect is a minimal version of the previous Fire effect.
