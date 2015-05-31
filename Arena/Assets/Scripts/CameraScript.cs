@@ -18,7 +18,7 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (cam.enabled)
+        if (cam.enabled && player1 != null && player2 != null)
         {
             Vector3 vBetween = player2.transform.position - player1.transform.position;
             vBetween.z = 0;

@@ -45,7 +45,8 @@ public class Showdown : MonoBehaviour
     [SerializeField]
     private GameObject showdownCanvas = null;
 
-    private Camera showdownCamera;
+    public Camera mainCamera, showdownCamera;
+    public GameObject HUD;
 
     [SerializeField]
     private float suspenseLowerLimit = 1.0f;
@@ -119,15 +120,14 @@ public class Showdown : MonoBehaviour
     /// </summary>
     private Dictionary<string, ShowdownAttack> attackMap = new Dictionary<string, ShowdownAttack>();
 
-    private Player player1 = new Player();
+    private Player player1;
 
-    private Player player2 = new Player();
+    private Player player2;
 
     // Use this for initialization
 
     private void Start()
     {
-        showdownCamera = GameObject.Find("ShowdownCamera").GetComponent<Camera>();
     }
 
     /// <summary>
@@ -147,7 +147,7 @@ public class Showdown : MonoBehaviour
     private void toggleCams()
     {
         showdownCamera.enabled = !showdownCamera.enabled;
-        Camera.main.enabled = !Camera.main.enabled;
+        mainCamera.enabled = !mainCamera.enabled;
     }
 
     /// <summary>
@@ -158,6 +158,7 @@ public class Showdown : MonoBehaviour
         this.player1 = player1;
         this.player2 = player2;
 
+        HUD.SetActive(false);
         toggleCams();
 
         attackMap.Clear();
@@ -176,6 +177,12 @@ public class Showdown : MonoBehaviour
     public void DisplayWinner(Player player)
     {
         this.winnerName.text = player.playerName;
+        if (player == player1)
+            player2.pushBack(/*player1.GetComponent<Rigidbody2D>().velocity*/ new Vector2(1, 1));
+        else
+            player1.pushBack(/*player2.GetComponent<Rigidbody2D>().velocity*/ new Vector2(1, 1));
+
+        Destroy(gameObject);
     }
 
     public void Fight()
@@ -223,6 +230,8 @@ public class Showdown : MonoBehaviour
         ShowdownAttack player2Attack = null;
 
         toggleCams();
+        HUD.SetActive(true);
+
         if (attackMap.TryGetValue(player1.playerName, out player1Attack))
         {
             if (attackMap.TryGetValue(player2.playerName, out player2Attack))

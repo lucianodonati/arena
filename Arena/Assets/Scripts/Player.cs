@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Player : MonoBehaviour
     public string playerName;
     private Renderer myRenderer;
     private GameManager gm;
+    public Player enemy;
 
     //[HideInInspector]
     public float percentage = 0.0f;
@@ -22,6 +24,12 @@ public class Player : MonoBehaviour
     public bool alive = true;
 
     #endregion PlayerStuff
+
+    #region GUI
+
+    private Text percText;
+
+    #endregion GUI
 
     #region Sounds
 
@@ -40,16 +48,32 @@ public class Player : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
+        percText = GameObject.Find("HealthPercentage" + id).GetComponent<Text>();
         myRenderer = GetComponent<Renderer>();
         PRB = GetComponent<Rigidbody2D>();
         sounds = GetComponent<SoundPlayer>();
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         GetComponent<SpriteRenderer>().color = myColor;
+        if (id == 1)
+            enemy = GameObject.Find("Player 2").GetComponent<Player>();
+        else
+            enemy = GameObject.Find("Player 1").GetComponent<Player>();
+
+        GameObject.Find("P" + id.ToString() + "_img").GetComponent<Image>().color = myColor;
     }
 
     // Update is called once per frame
     private void Update()
     {
+        if (gm.m_fWinTimer < 3.0f)
+        {
+            return;
+        }
+
+        float colorChange = Mathf.Clamp(1.0f - percentage / 100.0f, 0.0f, 1.0f);
+        percText.text = percentage.ToString() + "%";
+        percText.color = new Color(1.0f, colorChange, colorChange, 1.0f);
+
         // Timers
         if (onLava)
         {
@@ -62,7 +86,6 @@ public class Player : MonoBehaviour
             }
             else
                 lavaTimer -= Time.deltaTime;
-
             // Die
 
             if (!myRenderer.isVisible)
@@ -73,6 +96,17 @@ public class Player : MonoBehaviour
     public void takeDamage(float _dam)
     {
         percentage += _dam;
+    }
+
+    public void pushBack(Vector2 pushTo)
+    {
+        Vector2 force = new Vector2(-pushTo.x, -pushTo.y);
+
+        force *= 5000.0f;
+
+        PRB.AddForce(force);
+
+        takeDamage(50.0f);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -127,7 +161,9 @@ public class Player : MonoBehaviour
         }
         else if (collGO.tag == "Lava")
         {
-            // DIE
+            //DIE
+            gm.m_nPlayerCount--;
+            Destroy(this.gameObject);
         }
     }
 }
